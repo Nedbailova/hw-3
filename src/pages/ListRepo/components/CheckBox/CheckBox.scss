@@ -1,0 +1,58 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+#checkbox_input {
+  display: none;
+
+  &:checked {
+    + .new_checkbox {
+      svg {
+        color: $brand;
+        display: block;
+      }
+
+      &:disabled {
+        svg {
+          color: $checkbox-check-disabled;
+          display: block;
+        }
+      }
+    }
+  }
+
+  &:disabled {
+    + .new_checkbox {
+      border-color: $checkbox-border-disabled;
+      background-color: $checkbox-bg-disabled;
+      pointer-events: none;
+
+      &:hover {
+        border-color: $checkbox-border-disabled;
+      }
+    }
+  }
+
+  &:hover {
+    + .new_checkbox {
+      border-color: $brand;
+    }
+  }
+}
+
+.new_checkbox {
+  @include size(40px, 40px);
+
+  background: $white;
+  border: 1px solid $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  svg {
+    @include size(40px, 40px);
+    margin: -1px;
+    position: absolute;
+    display: none;
+  }
+}

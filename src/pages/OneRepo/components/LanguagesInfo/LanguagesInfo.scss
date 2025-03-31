@@ -1,0 +1,43 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.language_stats {
+  @include size(273px);
+
+  .progress_bar {
+    height: 10px;
+    border-radius: $border-radius;
+    overflow: hidden;
+    display: flex;
+    gap: 2px;
+    margin-bottom: $space-xs;
+  }
+}
+
+.language_list {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.language_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.language_info {
+  display: flex;
+  align-items: center;
+  gap: $space-xxs;
+
+  .language_color {
+    @include size($space-xxs, $space-xxs);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+}

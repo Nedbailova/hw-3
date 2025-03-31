@@ -1,0 +1,38 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.input {
+  padding: $space-m $space-xs;
+  box-sizing: border-box;
+  border: none;
+  @include size(100%, 52px);
+  background-color: $button-primary-text;
+  outline: none;
+  border-radius: $border-radius;
+  font-family: "Roboto";
+
+  &:hover {
+    border: 1px solid $brand;
+  }
+
+  &:focus {
+    border: 1px solid $brand;
+  }
+
+  &[disabled] {
+    pointer-events: none;
+  }
+}
+
+.input-block {
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  margin-left: -35px;
+}
+
+#dropdown_input {
+  border-radius: 0;
+}

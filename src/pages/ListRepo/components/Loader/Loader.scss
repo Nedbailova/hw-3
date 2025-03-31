@@ -1,0 +1,17 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.loader {
+  &-s {
+    @include size($space-xl, $space-xl);
+  }
+
+  &-m {
+    @include size(48px, 48px);
+  }
+
+  &-l,
+  &-undefined {
+    @include size(60px, 60px);
+  }
+}

@@ -1,0 +1,8 @@
+@use "styles/variables" as *;
+
+.topic {
+  padding: 4px 15px;
+  border-radius: 20px;
+  color: $text-another-blue;
+  background-color: $topic-bg;
+}

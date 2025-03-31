@@ -1,0 +1,95 @@
+@use "styles/variables" as *;
+
+.view {
+  &-title {
+    font-size: $space-xl;
+    font-weight: bold;
+  }
+
+  &-big-title {
+    font-size: 44px;
+    line-height: 48px;
+    font-weight: bold;
+  }
+
+  &-button {
+    font-size: 18px;
+    line-height: 134%;
+    cursor: pointer;
+  }
+
+  &-p-20 {
+    font-size: $space-l;
+    line-height: $space-xl;
+  }
+
+  &-p-18 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  &-p-16 {
+    font-size: $space-m;
+    line-height: $space-l;
+  }
+
+  &-p-14 {
+    font-size: $space-s;
+    line-height: 18px;
+  }
+
+  &-p-12 {
+    font-size: $space-xs;
+    line-height: 100%;
+  }
+
+  &-p-10 {
+    font-size: 10px;
+  }
+}
+
+.weight {
+  &-normal {
+    font-weight: 400;
+  }
+
+  &-medium {
+    font-weight: 500;
+  }
+
+  &-bold {
+    font-weight: 700;
+  }
+}
+
+.text[maxLines] {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.color {
+  &-primary {
+    color: $text-primary;
+  }
+
+  &-secondary {
+    color: $text-secondary;
+  }
+
+  &-accent {
+    color: $text-accent;
+  }
+
+  &-blue {
+    color: $text-blue;
+  }
+
+  &-another-blue {
+    color: $text-another-blue;
+  }
+
+  &-secondary-dark {
+    color: $text-secondary-dark;
+  }
+}

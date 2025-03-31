@@ -1,0 +1,25 @@
+@use "styles/variables" as *;
+
+.сontributor {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  text-align: center;
+
+  > :nth-child(1) {
+    margin-right: $space-xxs;
+  }
+
+  > :nth-child(2) {
+    margin-right: 4px;
+  }
+}
+
+.сontributor_img {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
+}
