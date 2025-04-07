@@ -31,18 +31,23 @@
   &:disabled {
     background-color: $button-primary-bg-disabled;
   }
+}
 
-  &.disabled {
-    pointer-events: none;
-  }
+.disabled {
+  pointer-events: none;
+}
 
-  &.search {
-    border-radius: $border-radius;
-  }
+.search {
+  border-radius: $border-radius;
+}
 
-  &.pagination_button {
-    @include size(38px, 42px);
-  }
+.pagination_button {
+  @include size(38px, 42px);
+}
+
+.active {
+  background-color: $brand;
+  color: $button-primary-text;
 }
 
 .inactive {

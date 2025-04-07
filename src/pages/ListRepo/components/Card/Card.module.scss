@@ -1,0 +1,44 @@
+@use "styles/variables" as *;
+
+.card {
+  background-color: $button-primary-text;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+
+  &:hover {
+    box-shadow: 0 4px 10px 0 $card-shadow;
+  }
+
+  img {
+    margin-bottom: $space-xl;
+    background-color: $button-primary-bg-disabled;
+  }
+}
+
+.textBlock {
+  padding: 0 $space-xs;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.costBlock {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 $space-xs;
+  box-sizing: border-box;
+  align-items: center;
+  margin-bottom: $space-xl;
+}
+
+.captionBlock {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: pre-wrap;
+}

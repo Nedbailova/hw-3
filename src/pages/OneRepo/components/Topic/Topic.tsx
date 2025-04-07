@@ -1,4 +1,4 @@
-import './Topic.scss';
+import styles from './Topic.module.scss';
 import { ReactNode } from 'react';
 import Text from 'components/Text';
 
@@ -8,8 +8,10 @@ interface TopicProps {
 
 const Topic = ({ children }: TopicProps) => {
   return (
-    <div className="topic">
-      <Text view="p-14" weight="bold" color="another-blue" children={children} />
+    <div className={styles.topic}>
+      <Text view="p-14" weight="bold" color="another-blue">
+        {children}
+      </Text>
     </div>
   );
 };

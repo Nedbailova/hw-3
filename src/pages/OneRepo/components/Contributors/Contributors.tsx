@@ -1,4 +1,4 @@
-import './Contributors.scss';
+import styles from './Contributors.module.scss';
 import Text from 'components/Text';
 
 interface ContributorData {
@@ -14,10 +14,16 @@ interface ContributorsProps {
 
 const Contributors = ({ contributor }: ContributorsProps) => {
   return (
-    <div className="сontributor">
-      <img className="сontributor_img" src={contributor.avatarUrl} />
-      <Text view="p-16" weight="bold" children={contributor.username} />
-      {contributor.name && <Text view="p-16" color="secondary" children={contributor.name} />}
+    <div className={styles.contributor}>
+      <img className={styles.contributor_img} src={contributor.avatarUrl} alt={contributor.username} />
+      <Text view="p-16" weight="bold">
+        {contributor.username}
+      </Text>
+      {contributor.name && (
+        <Text view="p-16" color="secondary">
+          {contributor.name}
+        </Text>
+      )}
     </div>
   );
 };

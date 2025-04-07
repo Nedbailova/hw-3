@@ -1,6 +1,6 @@
 import React from 'react';
 import Text from 'components/Text';
-import './Card.scss';
+import styles from './Card.module.scss'; 
 import StarIcon from 'components/icons/StarIcon';
 
 export type CardProps = {
@@ -16,13 +16,12 @@ export type CardProps = {
 
 const Card: React.FC<CardProps> = ({ className, image, captionSlot, title, subtitle, onClick, ...props }) => {
   return (
-    <div className={className} id="card" onClick={onClick} {...props}>
+    <div className={`${className} ${styles.card}`} id="card" onClick={onClick} {...props}>
       <img src={image} />
-      <div className="text-block">
+      <div className={styles.textBlock}>
         {captionSlot && (
-          <div className="caption-block">
+          <div className={styles.captionBlock}>
             <StarIcon color="star-accent" width={13} height={13} />
-
             <Text color="secondary" view="p-14" weight="medium">
               {captionSlot}
             </Text>

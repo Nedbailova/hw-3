@@ -1,15 +1,14 @@
 @use "styles/variables" as *;
 @use "styles/mixins" as *;
 
-
-.list_repo_block {
+.listRepo {
   background-color: $bg-color;
 
-  .header_block {
+  .headerBlock {
     margin-bottom: 30px;
   }
 
-  .repo_block {
+  .repoBlock {
     display: grid;
     grid-template-columns: repeat(3, 360px);
     grid-auto-rows: 506px;
@@ -19,12 +18,12 @@
     margin-bottom: 40px;
   }
 
-  .title_block {
+  .titleBlock {
     text-align: center;
     margin-bottom: 58px;
   }
 
-  .search_block {
+  .searchBlock {
     display: flex;
     gap: 19px;
     @include size(100%);
@@ -35,12 +34,12 @@
     }
   }
 
-  .dropdown_block {
+  .dropdownBlock {
     margin-bottom: 20px;
     @include size(300px, 52px);
   }
 
-  .pagination_block {
+  .paginationBlock {
     padding-bottom: 22px;
     box-sizing: border-box;
   }

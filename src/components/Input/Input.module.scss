@@ -24,15 +24,17 @@
   }
 }
 
-.input-block {
+.inputBlock {
   display: flex;
   align-items: center;
 }
 
-.input-icon {
+.inputIcon {
   margin-left: -35px;
 }
 
-#dropdown_input {
-  border-radius: 0;
+:global {
+  #dropdown_input {
+    border-radius: 0;
+  }
 }

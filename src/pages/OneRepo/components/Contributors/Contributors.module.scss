@@ -1,6 +1,6 @@
 @use "styles/variables" as *;
 
-.сontributor {
+.contributor {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: max-content;
@@ -16,7 +16,7 @@
   }
 }
 
-.сontributor_img {
+.contributor_img {
   height: 32px;
   width: 32px;
   border-radius: 50%;

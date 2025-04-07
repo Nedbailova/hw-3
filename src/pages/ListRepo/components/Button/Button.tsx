@@ -1,5 +1,5 @@
 import React from 'react';
-import './Button.scss';
+import styles from './Button.module.scss';
 import Loader from '../Loader';
 import SearchIcon from '../icons/SearchIcon';
 
@@ -16,12 +16,21 @@ const Button: React.FC<ButtonProps> = ({
   search = false,
   ...props
 }: ButtonProps) => {
-  const ClassName: string = loading
-    ? `button ${className} ${search ? 'search' : ''} disabled`
-    : `button ${className} ${search ? 'search' : ''}`;
+  const customClasses = [];
+
+  customClasses.push(styles.button);
+
+  if (className) {
+    className.split(' ').forEach((cls) => {
+      if (styles[cls]) customClasses.push(styles[cls]);
+    });
+  }
+
+  if (search) customClasses.push(styles.search);
+  if (loading) customClasses.push(styles.disabled);
 
   return (
-    <button className={ClassName} disabled={loading} {...props}>
+    <button className={customClasses.join(' ')} disabled={loading} {...props}>
       {loading && <Loader size="s" color="#FFF" />}
       {search && <SearchIcon />}
       {children}

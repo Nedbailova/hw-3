@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import './Pagination.scss';
+import styles from'./Pagination.module.scss';
 import Button from '../Button';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon';
@@ -31,7 +31,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange
   };
 
   return (
-    <div className="pagination">
+    <div className={styles.pagination}>
       <ArrowRightIcon
         color="some-black"
         onClick={() => onPageChange(currentPage - 1)}

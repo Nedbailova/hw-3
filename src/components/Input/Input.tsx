@@ -1,5 +1,5 @@
 import React from 'react';
-import './Input.scss';
+import styles from './Input.module.scss';
 
 export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> & {
   value: string;
@@ -10,22 +10,23 @@ export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onCh
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ value, onChange, afterSlot, className = '', placeholder = '', ...props }, ref) => {
-    const ClassName: string = 'input-block ' + className;
+    const combinedClassName = `${styles.inputBlock} ${className}`;
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange(e.target.value);
     };
+
     return (
-      <div className={ClassName}>
+      <div className={combinedClassName}>
         <input
           ref={ref}
           type="text"
-          className="input"
+          className={styles.input}
           value={value}
           placeholder={placeholder}
           {...props}
           onChange={handleChange}
         />
-        {afterSlot && <span className="input-icon">{afterSlot}</span>}
+        {afterSlot && <span className={styles.inputIcon}>{afterSlot}</span>}
       </div>
     );
   },
