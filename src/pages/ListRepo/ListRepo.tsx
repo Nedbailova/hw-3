@@ -15,12 +15,12 @@ const ListRepo = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState(searchParams.get('org') || '');
-  const [githubStore] = useState(() => new GitHubStore());
+  const githubStore = GitHubStore.getInstance(); 
 
   useEffect(() => {
     githubStore.initFromQueryParams(searchParams);
     githubStore.fetchRepos();
-  }, []);
+  }, [githubStore, searchParams]);
 
   useEffect(() => {
     navigate(`?${new URLSearchParams(githubStore.getQueryParams)}`, { replace: true });

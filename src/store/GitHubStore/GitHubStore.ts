@@ -12,6 +12,15 @@ export default class GitHubStore implements IGitHubStore {
   currentPage: number = 1;
   totalCount: number = 0;
 
+  private static instance: GitHubStore | null = null;
+
+  static getInstance() {
+    if (!GitHubStore.instance) {
+      GitHubStore.instance = new GitHubStore();
+    }
+    return GitHubStore.instance;
+  }
+
   constructor() {
     makeObservable(this, {
       repos: observable,
