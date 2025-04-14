@@ -11,9 +11,13 @@ export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onCh
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ value, onChange, afterSlot, className = '', placeholder = '', ...props }, ref) => {
     const combinedClassName = `${styles.inputBlock} ${className}`;
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange(e.target.value);
-    };
+
+    const handleChange = React.useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(e.target.value);
+      },
+      [onChange]
+    );
 
     return (
       <div className={combinedClassName}>
@@ -32,4 +36,4 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   },
 );
 
-export default Input;
+export default React.memo(Input);

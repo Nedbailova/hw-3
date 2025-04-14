@@ -59,4 +59,4 @@ const LanguagesInfo: React.FC<LanguageStatsProps> = ({ languages }) => {
   );
 };
 
-export default LanguagesInfo;
+export default React.memo(LanguagesInfo);

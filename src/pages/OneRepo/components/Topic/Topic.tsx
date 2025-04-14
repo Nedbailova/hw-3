@@ -1,6 +1,7 @@
 import styles from './Topic.module.scss';
 import { ReactNode } from 'react';
 import Text from 'components/Text';
+import React from 'react';
 
 interface TopicProps {
   children: ReactNode;
@@ -16,4 +17,4 @@ const Topic = ({ children }: TopicProps) => {
   );
 };
 
-export default Topic;
+export default React.memo(Topic);

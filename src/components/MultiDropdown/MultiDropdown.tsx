@@ -62,14 +62,15 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     setFilteredOptions(filtered);
   }, [inputValue, options]);
 
-  const handleInputChange = (newValue: string) => {
-    if (disabled) {
-      return;
-    }
-    setInputValue(newValue);
-  };
+  const handleInputChange = React.useCallback(
+    (newValue: string) => {
+      if (disabled) return;
+      setInputValue(newValue);
+    },
+    [disabled]
+  );
 
-  const handleOptionClick = (clickedOption: Option) => {
+  const handleOptionClick = React.useCallback((clickedOption: Option) => {
     const isSelected = value.some((option) => option.key === clickedOption.key);
     if (isSelected) {
       onChange(value.filter((option) => option.key !== clickedOption.key));
@@ -77,13 +78,16 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
       onChange([...value, clickedOption]);
     }
     setInputValue('');
-  };
+  }, [value, onChange]); 
 
-  const handleDocumentClick = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-      setIsOpen(false);
-    }
-  };
+  const handleDocumentClick = React.useCallback(
+    (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    },
+    []
+  );
 
   const inputDisplayValue = inputValue || (value.length > 0 ? getTitle(value) : '');
 
@@ -120,4 +124,4 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   );
 };
 
-export default MultiDropdown;
+export default React.memo(MultiDropdown);

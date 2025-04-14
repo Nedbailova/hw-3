@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import styles from'./Pagination.module.scss';
+import React, { FC, useCallback } from 'react';
+import styles from './Pagination.module.scss';
 import Button from '../Button';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon';
@@ -30,11 +30,17 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange
     return visiblePages;
   };
 
+  const handlePageChange = useCallback((page: number) => {
+    if (page !== currentPage && page >= 1 && page <= totalPages) {
+      onPageChange(page);
+    }
+  }, [onPageChange, currentPage, totalPages]);
+
   return (
     <div className={styles.pagination}>
       <ArrowRightIcon
         color="some-black"
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
         useStrokeColor={true}
       />
@@ -43,7 +49,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange
         <>
           <Button
             children={1}
-            onClick={() => onPageChange(1)}
+            onClick={() => handlePageChange(1)}
             className={`pagination_button ${currentPage === 1 ? 'active' : 'inactive'}`}
           />
           {currentPage > 3 && <span className="pagination_ellipsis">...</span>}
@@ -54,7 +60,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange
         <Button
           key={page}
           className={`pagination_button ${currentPage === page ? 'active' : 'inactive'}`}
-          onClick={() => onPageChange(page)}
+          onClick={() => handlePageChange(page)}
         >
           {page}
         </Button>
@@ -64,7 +70,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange
         <>
           {currentPage < totalPages - 2 && <span className="pagination_ellipsis">...</span>}
           <Button
-            onClick={() => onPageChange(totalPages)}
+            onClick={() => handlePageChange(totalPages)}
             className={`pagination_button ${currentPage === totalPages ? 'active' : 'inactive'}`}
           >
             {totalPages}
@@ -74,7 +80,7 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange
 
       <ArrowLeftIcon
         color="some-black"
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         useStrokeColor={true}
       />
@@ -82,4 +88,4 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange
   );
 };
 
-export default Pagination;
+export default React.memo(Pagination);

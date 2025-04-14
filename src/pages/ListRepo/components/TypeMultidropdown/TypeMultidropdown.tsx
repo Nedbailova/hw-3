@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import MultiDropdown, { Option } from 'components/MultiDropdown';
 import { useSearchParams } from 'react-router-dom';
 
@@ -24,14 +24,14 @@ const TypeMultidropdown: React.FC<TypeMultidropdownProps> = ({
   const [searchParams] = useSearchParams();
   const urlTypes = searchParams.get('types');
 
-  const getInitialSelectedOptions = () => {
+  const getInitialSelectedOptions = useMemo(() => {
     const typesToUse = urlTypes ? urlTypes.split(',') : initialSelected;
     return repoTypeOptions.filter((option) => typesToUse.includes(option.key));
-  };
+  }, [urlTypes, initialSelected]);
 
-  const [selectedTypes, setSelectedTypes] = useState<Option[]>(getInitialSelectedOptions());
+  const [selectedTypes, setSelectedTypes] = useState<Option[]>(getInitialSelectedOptions);
 
-  const handleTypeChange = (types: Option[]) => {
+  const handleTypeChange = useCallback((types: Option[]) => {
     let newTypes = types;
     const hasAll = types.some((t) => t.key === 'all');
 
@@ -43,14 +43,14 @@ const TypeMultidropdown: React.FC<TypeMultidropdownProps> = ({
 
     setSelectedTypes(newTypes);
     onChange(newTypes.map((type) => type.key));
-  };
+  }, [onChange]);
 
-  const getTypesTitle = (types: Option[]) => {
+  const getTypesTitle = useCallback((types: Option[]) => {
     if (types.length === 0 || (types.length === 1 && types[0].key === 'all')) {
       return '';
     }
     return types.map((type) => type.value).join(', ');
-  };
+  }, []);
 
   return (
     <MultiDropdown
@@ -62,4 +62,4 @@ const TypeMultidropdown: React.FC<TypeMultidropdownProps> = ({
   );
 };
 
-export default TypeMultidropdown;
+export default React.memo(TypeMultidropdown);

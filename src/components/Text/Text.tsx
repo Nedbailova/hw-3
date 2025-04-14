@@ -30,11 +30,11 @@ const Text: React.FC<TextProps> = ({
     ? { overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: maxLines, WebkitBoxOrient: 'vertical' }
     : {};
 
-  const handleClick = () => {
+  const handleClick = React.useCallback(() => {
     if (onClick) {
       onClick();
     }
-  };
+  }, [onClick]);
 
   return (
     <Tag className={ClassNames} color={Color} style={maxLinesStyle} onClick={handleClick}>
@@ -43,4 +43,4 @@ const Text: React.FC<TextProps> = ({
   );
 };
 
-export default Text;
+export default React.memo(Text);

@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './Contributors.module.scss';
 import Text from 'components/Text';
 
@@ -28,4 +29,4 @@ const Contributors = ({ contributor }: ContributorsProps) => {
   );
 };
 
-export default Contributors;
+export default React.memo(Contributors);

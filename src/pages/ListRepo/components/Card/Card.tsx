@@ -38,4 +38,4 @@ const Card: React.FC<CardProps> = ({ className, image, captionSlot, title, subti
   );
 };
 
-export default Card;
+export default React.memo(Card);
