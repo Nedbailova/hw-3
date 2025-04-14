@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { singlerepoStore } from 'store/SingleRepoStore';
+import SingleRepoStore from 'store/SingleRepoStore';
 import Header from 'components/Header';
 import Text from 'components/Text';
 import styles from './OneRepo.module.scss';
@@ -12,13 +12,14 @@ import LanguagesInfo from './components/LanguagesInfo';
 import EyeIcon from './components/icons/EyeIcon';
 import ForkIcon from './components/icons/ForkIcon';
 import Contributors from './components/Contributors';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const OneRepositorie = () => {
   const { name } = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const org = searchParams.get('org');
+  const [singlerepoStore] = useState(() => new SingleRepoStore());
 
   useEffect(() => {
     if (name) {

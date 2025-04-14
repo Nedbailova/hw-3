@@ -1,4 +1,2 @@
-import GitHubStore from "./GitHubStore";
-
-const githubStore = new GitHubStore();
-export { githubStore };
+export { default } from './GitHubStore'; 
+export * from './GitHubStore'; 

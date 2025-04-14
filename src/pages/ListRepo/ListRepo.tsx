@@ -7,7 +7,7 @@ import Input from 'components/Input';
 import { useEffect, useState } from 'react';
 import Header from 'components/Header';
 import Pagination from 'pages/ListRepo/components/Pagination';
-import { githubStore } from 'store/GitHubStore';
+import GitHubStore from 'store/GitHubStore';
 import { observer } from 'mobx-react-lite';
 import TypeMultidropdown from './components/TypeMultidropdown/TypeMultidropdown';
 
@@ -15,6 +15,7 @@ const ListRepo = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState(searchParams.get('org') || '');
+  const [githubStore] = useState(() => new GitHubStore());
 
   useEffect(() => {
     githubStore.initFromQueryParams(searchParams);

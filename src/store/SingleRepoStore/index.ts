@@ -1,4 +1,2 @@
-import SingleRepoStore from "./SingleRepoStore";
-
-const singlerepoStore = new SingleRepoStore();
-export { singlerepoStore };
+export { default } from './SingleRepoStore'; 
+export * from './SingleRepoStore'; 
