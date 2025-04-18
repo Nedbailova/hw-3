@@ -1,5 +1,6 @@
 @use "styles/variables" as *;
 
+
 .card {
   background-color: $button-primary-text;
   display: flex;
@@ -42,3 +43,21 @@
   gap: 4px;
   white-space: pre-wrap;
 }
+
+.contentBlock {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px;
+  box-sizing: border-box;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+
+

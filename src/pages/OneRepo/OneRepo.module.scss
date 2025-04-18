@@ -17,6 +17,11 @@
 
   &_back {
     cursor: pointer;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateX(-5px);
+    }
   }
 
   &_img {

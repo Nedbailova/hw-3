@@ -5,7 +5,7 @@ import Header from 'components/Header';
 import Text from 'components/Text';
 import styles from './OneRepo.module.scss';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
-import LinkIcon from './components/icons/LinkIcon';
+import LinkIcon from 'components/icons/LinkIcon';
 import StarIcon from 'components/icons/StarIcon';
 import Topic from './components/Topic';
 import LanguagesInfo from './components/LanguagesInfo';
@@ -29,7 +29,12 @@ const OneRepositorie = () => {
   }, [org, name]);
 
   const handleCardClick = () => {
-    navigate('/Repos');
+    navigate(`/repos/${org ? `?org=${org}` : ''}`);
+  };
+
+  const handleContributorClick = (username: string) => {
+    navigate(`/repos/${name}/contributors/${username}${org ? `?org=${org}` : ''}`);
+    window.scrollTo(0, 0);
   };
 
 
@@ -127,7 +132,7 @@ const OneRepositorie = () => {
                     </div>
                   </div>
                   <div className={styles.contributors}>
-                    {repoInfo.contributors?.map((c) => <Contributors key={c.username} contributor={c} />)}
+                    {repoInfo.contributors?.map((c) => <Contributors key={c.username} contributor={c} onClick={() => handleContributorClick(c.username)}/>)}
                   </div>
                 </div>
 

@@ -94,7 +94,7 @@ const ListRepo = () => {
           <Loader size='l'/>
         ) : githubStore.error ? (
           <div className="error-message">{githubStore.error}</div>
-        ) : (
+        ) : ( githubStore.repos.length > 0 ? (
           <div className={styles.repoBlock}>
             {githubStore.repos.map((repo) => (
               <Card
@@ -106,7 +106,9 @@ const ListRepo = () => {
                 onClick={() => handleCardClick(repo.name)}
               />
             ))}
-          </div>
+          </div> ) : (<Text view="p-18">
+            No repositories found
+          </Text>)
         )}
 
         <div className={styles.paginationBlock}>

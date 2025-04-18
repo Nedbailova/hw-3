@@ -11,11 +11,13 @@ interface ContributorData {
 
 interface ContributorsProps {
   contributor: ContributorData;
+  onClick: React.MouseEventHandler;
 }
 
-const Contributors = ({ contributor }: ContributorsProps) => {
+
+const Contributors = ({ contributor, onClick }: ContributorsProps) => {
   return (
-    <div className={styles.contributor}>
+    <div className={styles.contributor} onClick={onClick}>
       <img className={styles.contributor_img} src={contributor.avatarUrl} alt={contributor.username} />
       <Text view="p-16" weight="bold">
         {contributor.username}
