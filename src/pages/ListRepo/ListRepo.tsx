@@ -10,12 +10,13 @@ import Pagination from 'pages/ListRepo/components/Pagination';
 import GitHubStore from 'store/GitHubStore';
 import { observer } from 'mobx-react-lite';
 import TypeMultidropdown from './components/TypeMultidropdown/TypeMultidropdown';
+import Loader from '../../components/Loader';
 
 const ListRepo = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState(searchParams.get('org') || '');
-  const githubStore = GitHubStore.getInstance(); 
+  const githubStore = GitHubStore.getInstance();
 
   useEffect(() => {
     githubStore.initFromQueryParams(searchParams);
@@ -28,6 +29,7 @@ const ListRepo = () => {
 
   const handleCardClick = (repoName: string) => {
     navigate(`/repos/${repoName}?org=${githubStore.currentOrganization}`);
+    window.scrollTo(0, 0);
   };
 
   const handleInputChange = (value: string) => {
@@ -89,7 +91,7 @@ const ListRepo = () => {
         </div>
 
         {githubStore.isLoading ? (
-          <div className="loading-indicator">Loading repositories...</div>
+          <Loader size='l'/>
         ) : githubStore.error ? (
           <div className="error-message">{githubStore.error}</div>
         ) : (

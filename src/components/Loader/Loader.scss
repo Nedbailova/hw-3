@@ -2,6 +2,10 @@
 @use "styles/mixins" as *;
 
 .loader {
+
+  animation: rotate 1s linear infinite;
+  transform-origin: center center;
+
   &-s {
     @include size($space-xl, $space-xl);
   }
@@ -13,5 +17,14 @@
   &-l,
   &-undefined {
     @include size(60px, 60px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg); 
   }
 }
