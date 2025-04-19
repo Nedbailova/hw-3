@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Button.module.scss';
 import Loader from 'components/Loader';
-import SearchIcon from '../icons/SearchIcon';
+// import SearchIcon from '../icons/SearchIcon';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
@@ -32,7 +32,6 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button className={customClasses.join(' ')} disabled={loading} {...props}>
       {loading && <Loader size="s" color="#FFF" />}
-      {search && <SearchIcon />}
       {children}
     </button>
   );

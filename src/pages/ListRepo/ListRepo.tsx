@@ -10,7 +10,8 @@ import Pagination from 'components/Pagination';
 import GitHubStore from 'store/GitHubStore';
 import { observer } from 'mobx-react-lite';
 import TypeMultidropdown from './components/TypeMultidropdown/TypeMultidropdown';
-import Loader from '../../components/Loader';
+import Loader from 'components/Loader';
+import SearchIcon from 'components/icons/SearchIcon';
 
 const ListRepo = () => {
   const navigate = useNavigate();
@@ -87,7 +88,9 @@ const ListRepo = () => {
               placeholder="Enter organization name"
             />
           </div>
-          <Button search={true} onClick={handleSearch} children={''} />
+          <Button search={true} onClick={handleSearch}>
+            <SearchIcon />{' '}
+          </Button>
         </div>
 
         {githubStore.isLoading ? (
