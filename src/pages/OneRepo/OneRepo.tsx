@@ -10,7 +10,7 @@ import StarIcon from 'components/icons/StarIcon';
 import Topic from './components/Topic';
 import LanguagesInfo from './components/LanguagesInfo';
 import EyeIcon from './components/icons/EyeIcon';
-import ForkIcon from './components/icons/ForkIcon';
+import ForkIcon from '../../components/icons/ForkIcon';
 import Contributors from './components/Contributors';
 import { useEffect, useState } from 'react';
 import Loader from 'components/Loader';
@@ -36,7 +36,6 @@ const OneRepositorie = () => {
     navigate(`/repos/${name}/contributors/${username}${org ? `?org=${org}` : ''}`);
     window.scrollTo(0, 0);
   };
-
 
   const { repoInfo, readmeHtml, newLink, isLoading, error } = singlerepoStore;
 
@@ -132,7 +131,13 @@ const OneRepositorie = () => {
                     </div>
                   </div>
                   <div className={styles.contributors}>
-                    {repoInfo.contributors?.map((c) => <Contributors key={c.username} contributor={c} onClick={() => handleContributorClick(c.username)}/>)}
+                    {repoInfo.contributors?.map((c) => (
+                      <Contributors
+                        key={c.username}
+                        contributor={c}
+                        onClick={() => handleContributorClick(c.username)}
+                      />
+                    ))}
                   </div>
                 </div>
 

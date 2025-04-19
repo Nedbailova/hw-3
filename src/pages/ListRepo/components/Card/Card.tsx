@@ -2,7 +2,7 @@ import React from 'react';
 import Text from 'components/Text';
 import styles from './Card.module.scss';
 import StarIcon from 'components/icons/StarIcon';
-import ForkIcon from 'pages/OneRepo/components/icons/ForkIcon';
+import ForkIcon from 'components/icons/ForkIcon';
 
 export type CardProps = {
   className?: string;
@@ -13,8 +13,8 @@ export type CardProps = {
   contentSlot?: React.ReactNode;
   onClick?: React.MouseEventHandler;
   actionSlot?: React.ReactNode;
-  forksCount?: number; 
-  repoLanguage?: string|null;
+  forksCount?: number;
+  repoLanguage?: string | null;
 };
 
 const Card: React.FC<CardProps> = ({
@@ -39,13 +39,16 @@ const Card: React.FC<CardProps> = ({
             <Text color="secondary" view="p-14" weight="medium">
               {captionSlot}
             </Text>
-            <ForkIcon width={13} height={13}/>
+            {(forksCount !== undefined && forksCount !== null) && <ForkIcon width={13} height={13} />}
             <Text color="secondary" view="p-14" weight="medium">
               {forksCount}
             </Text>
-            <Text color="secondary" view="p-14" weight="medium">
-              {repoLanguage}
-            </Text>
+
+            {repoLanguage && (
+              <Text color="secondary" view="p-14" weight="medium">
+                {repoLanguage}
+              </Text>
+            )}
           </div>
         )}
         <Text view="p-20" weight="medium" maxLines={2}>
@@ -55,7 +58,13 @@ const Card: React.FC<CardProps> = ({
           {subtitle}
         </Text>
       </div>
-      <div className={styles.contentBlock}>{contentSlot && <Text view="p-16" color="secondary-dark">{contentSlot}</Text>}</div>
+      <div className={styles.contentBlock}>
+        {contentSlot && (
+          <Text view="p-16" color="secondary-dark">
+            {contentSlot}
+          </Text>
+        )}
+      </div>
     </div>
   );
 };
