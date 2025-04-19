@@ -25,6 +25,6 @@ export const routesConfig: RouteObject[] = [
   },
   {
     path: '*',
-    element: <Navigate to="/" replace />,
+    element: <Navigate to="/repos" replace />,
   },
 ];
