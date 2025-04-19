@@ -1,7 +1,6 @@
 import { makeObservable, observable, action, computed, runInAction } from 'mobx';
 import axios from 'axios';
-import { ContributorInfo, UserRepo, GithubRepoResponse } from './types'; 
-
+import { ContributorInfo, UserRepo, GithubRepoResponse } from './types';
 
 export default class ContributorStore {
   userInfo: ContributorInfo | null = null;
@@ -81,9 +80,9 @@ export default class ContributorStore {
 
   private async fetchUserInfo(username: string) {
     return axios.get(`https://api.github.com/users/${username}`, {
-      headers: { 
-        Accept: 'application/vnd.github+json'
-      }
+      headers: {
+        Accept: 'application/vnd.github+json',
+      },
     });
   }
 
@@ -92,45 +91,11 @@ export default class ContributorStore {
       params: {
         sort: 'updated',
         direction: 'desc',
-        per_page: 100
+        per_page: 100,
       },
-      headers: { 
-        Accept: 'application/vnd.github+json'
-      }
+      headers: {
+        Accept: 'application/vnd.github+json',
+      },
     });
-  }
-
-  async fetchUserEvents(username: string) {
-    try {
-      const response = await axios.get(
-        `https://api.github.com/users/${username}/events`,
-        {
-          headers: { 
-            Accept: 'application/vnd.github+json'
-          }
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching user events:', error);
-      return [];
-    }
-  }
-
-  async fetchUserOrganizations(username: string) {
-    try {
-      const response = await axios.get(
-        `https://api.github.com/users/${username}/orgs`,
-        {
-          headers: { 
-            Accept: 'application/vnd.github+json'
-          }
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching user organizations:', error);
-      return [];
-    }
   }
 }

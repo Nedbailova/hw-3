@@ -1,6 +1,9 @@
 import { makeObservable, observable, action, computed, runInAction } from 'mobx';
 import axios from 'axios';
 import { RepoData, LanguageInfo, Contributor, GitHubContributor, GitHubUser } from './types';
+import { removeSVGTags } from 'utils/removeSVGTags/removeSVGTags';
+import { editLink } from 'utils/editLink/editLink';
+import { sortContributors } from 'utils/sortCintributors';
 
 export default class SingleRepoStore {
   repoInfo: RepoData | null = null;
@@ -40,6 +43,7 @@ export default class SingleRepoStore {
       const [repoResponse, readmeResponse, languagesResponse, contributorsResponse] = await Promise.all([
         axios.get(`https://api.github.com/repos/${organization}/${repoName}`, {
           headers: { Accept: 'application/vnd.github+json' },
+          
         }),
         this.fetchReadme(organization, repoName),
         this.fetchLanguages(organization, repoName),
@@ -47,7 +51,7 @@ export default class SingleRepoStore {
       ]);
 
       runInAction(() => {
-        this.newLink = this.editLink(repoResponse.data.homepage);
+        this.newLink = editLink(repoResponse.data.homepage);
         this.repoInfo = {
           name: repoResponse.data.name,
           description: repoResponse.data.description,
@@ -81,7 +85,7 @@ export default class SingleRepoStore {
         `https://api.github.com/repos/${orgName}/${repoName}/readme`,
         { headers: { Accept: 'application/vnd.github.html' } }
       );
-      return this.removeSVGTags(response.data);
+      return removeSVGTags(response.data);
     } catch {
       return '';
     }
@@ -135,32 +139,15 @@ export default class SingleRepoStore {
         })
       );
 
-      return this.sortContributors(contributors);
+      return sortContributors(contributors);
     } catch {
       return [];
     }
   }
 
-  private sortContributors(contributors: Contributor[]): Contributor[] {
-    return contributors.sort((a, b) => {
-      if (b.contributions !== a.contributions) return b.contributions - a.contributions;
-      if (a.name && !b.name) return -1;
-      if (!a.name && b.name) return 1;
-      if (a.name && b.name) return a.name.localeCompare(b.name);
-      return a.username.localeCompare(b.username);
-    });
-  }
+  
 
-  private removeSVGTags(html: string): string {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    doc.querySelectorAll('svg').forEach((svg) => svg.remove());
-    return doc.body.innerHTML;
-  }
+ 
 
-  private editLink(url: string | null | undefined): string {
-    if (!url) return '';
-    const parts = url.split('/');
-    return parts[2];
-  }
+  
 }

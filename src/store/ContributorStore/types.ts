@@ -17,7 +17,6 @@ export interface ContributorInfo {
   export interface UserRepo {
     id: number;
     name: string;
-    fullName: string;
     htmlUrl: string;
     description: string | null;
     stargazersCount: number;
