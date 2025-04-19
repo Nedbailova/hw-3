@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './Button.module.scss';
 import Loader from 'components/Loader';
-// import SearchIcon from '../icons/SearchIcon';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
