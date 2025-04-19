@@ -7,16 +7,16 @@
   transform-origin: center center;
 
   &-s {
-    @include size($space-xl, $space-xl);
+    @include square($space-xl);
   }
 
   &-m {
-    @include size(48px, 48px);
+    @include square(48px);
   }
 
   &-l,
   &-undefined {
-    @include size(60px, 60px);
+    @include square(60px);
   }
 }
 
