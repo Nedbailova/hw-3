@@ -30,11 +30,14 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange
     return visiblePages;
   };
 
-  const handlePageChange = useCallback((page: number) => {
-    if (page !== currentPage && page >= 1 && page <= totalPages) {
-      onPageChange(page);
-    }
-  }, [onPageChange, currentPage, totalPages]);
+  const handlePageChange = useCallback(
+    (page: number) => {
+      if (page !== currentPage && page >= 1 && page <= totalPages) {
+        onPageChange(page);
+      }
+    },
+    [onPageChange, currentPage, totalPages],
+  );
 
   return (
     <div className={styles.pagination}>

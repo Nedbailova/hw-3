@@ -10,7 +10,7 @@ import Loader from 'components/Loader';
 import FollowIcon from 'components/icons/FollowIcon';
 import RepoIcon from 'components/icons/RepoIcon';
 import LinkIcon from 'components/icons/LinkIcon';
-import Card from 'pages/ListRepo/components/Card';
+import Card from 'components/Card';
 
 const Contributor = () => {
   const { username } = useParams();

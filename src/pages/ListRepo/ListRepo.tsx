@@ -1,12 +1,12 @@
 import { useNavigate, useSearchParams } from 'react-router';
-import Card from 'pages/ListRepo/components/Card';
+import Card from 'components/Card';
 import styles from './ListRepo.module.scss';
 import Text from 'components/Text';
-import Button from 'pages/ListRepo/components/Button';
+import Button from 'components/Button';
 import Input from 'components/Input';
 import { useEffect, useState } from 'react';
 import Header from 'components/Header';
-import Pagination from 'pages/ListRepo/components/Pagination';
+import Pagination from 'components/Pagination';
 import GitHubStore from 'store/GitHubStore';
 import { observer } from 'mobx-react-lite';
 import TypeMultidropdown from './components/TypeMultidropdown/TypeMultidropdown';
@@ -91,10 +91,10 @@ const ListRepo = () => {
         </div>
 
         {githubStore.isLoading ? (
-          <Loader size='l'/>
+          <Loader size="l" />
         ) : githubStore.error ? (
           <div className="error-message">{githubStore.error}</div>
-        ) : ( githubStore.repos.length > 0 ? (
+        ) : githubStore.repos.length > 0 ? (
           <div className={styles.repoBlock}>
             {githubStore.repos.map((repo) => (
               <Card
@@ -106,9 +106,9 @@ const ListRepo = () => {
                 onClick={() => handleCardClick(repo.name)}
               />
             ))}
-          </div> ) : (<Text view="p-18">
-            No repositories found
-          </Text>)
+          </div>
+        ) : (
+          <Text view="p-18">No repositories found</Text>
         )}
 
         <div className={styles.paginationBlock}>

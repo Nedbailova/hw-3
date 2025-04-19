@@ -9,7 +9,7 @@ import LinkIcon from 'components/icons/LinkIcon';
 import StarIcon from 'components/icons/StarIcon';
 import Topic from './components/Topic';
 import LanguagesInfo from './components/LanguagesInfo';
-import EyeIcon from './components/icons/EyeIcon';
+import EyeIcon from '../../components/icons/EyeIcon';
 import ForkIcon from '../../components/icons/ForkIcon';
 import Contributors from './components/Contributors';
 import { useEffect, useState } from 'react';
