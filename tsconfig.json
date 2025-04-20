@@ -14,7 +14,8 @@
       "config/*": ["config/*"],
       "styles/*": ["styles/*"],
       "store/*": ["store/*"],
-      "utils/*": ["utils/*"]
+      "utils/*": ["utils/*"],
+      "types/*": ["types/*"]
     }
   }
 }

@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import MultiDropdown, { Option } from 'components/MultiDropdown';
 import { useSearchParams } from 'react-router-dom';
+import { repoTypeOptions, RepoTypes } from 'types/repoTypes';
 
 export type TypeMultidropdownProps = {
   className?: string;
@@ -8,19 +9,7 @@ export type TypeMultidropdownProps = {
   initialSelected?: string[];
 };
 
-const repoTypeOptions: Option[] = [
-  { key: 'all', value: 'All' },
-  { key: 'public', value: 'Public' },
-  { key: 'private', value: 'Private' },
-  { key: 'forks', value: 'Forks' },
-  { key: 'sources', value: 'Sources' },
-  { key: 'member', value: 'Member' },
-];
-
-const TypeMultidropdown: React.FC<TypeMultidropdownProps> = ({
-  onChange,
-  initialSelected = ['all'],
-}) => {
+const TypeMultidropdown: React.FC<TypeMultidropdownProps> = ({ onChange, initialSelected = ['all'] }) => {
   const [searchParams] = useSearchParams();
   const urlTypes = searchParams.get('types');
 
@@ -31,19 +20,25 @@ const TypeMultidropdown: React.FC<TypeMultidropdownProps> = ({
 
   const [selectedTypes, setSelectedTypes] = useState<Option[]>(getInitialSelectedOptions);
 
-  const handleTypeChange = useCallback((types: Option[]) => {
-    let newTypes = types;
-    const hasAll = types.some((t) => t.key === 'all');
+  const dropdownOptions = useMemo(() => {
+    return repoTypeOptions.filter((option) => option.key !== RepoTypes.ALL);
+  }, []);
 
-    if (hasAll && types.length > 1) {
-      newTypes = types.filter((t) => t.key !== 'all');
-    } else if (types.length === 0) {
-      newTypes = [repoTypeOptions[0]];
-    }
+  const handleTypeChange = useCallback(
+    (types: Option[]) => {
+      let newTypes = types;
 
-    setSelectedTypes(newTypes);
-    onChange(newTypes.map((type) => type.key));
-  }, [onChange]);
+      if (types.length > 1) {
+        newTypes = types.filter((t) => t.key !== 'all');
+      } else if (types.length === 0) {
+        newTypes = [repoTypeOptions[0]];
+      }
+
+      setSelectedTypes(newTypes);
+      onChange(newTypes.map((type) => type.key));
+    },
+    [onChange],
+  );
 
   const getTypesTitle = useCallback((types: Option[]) => {
     if (types.length === 0 || (types.length === 1 && types[0].key === 'all')) {
@@ -54,7 +49,7 @@ const TypeMultidropdown: React.FC<TypeMultidropdownProps> = ({
 
   return (
     <MultiDropdown
-      options={repoTypeOptions}
+      options={dropdownOptions}
       value={selectedTypes}
       onChange={handleTypeChange}
       getTitle={getTypesTitle}
