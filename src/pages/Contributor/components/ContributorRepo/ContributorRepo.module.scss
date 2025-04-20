@@ -10,12 +10,20 @@
 
   &_title {
     margin-bottom: 20px;
+
+    @media (max-width: 854px) {
+      text-align: center;
+    }
   }
 
   .repositories_list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
+
+    @media (max-width: 854px) {
+      justify-content: center;
+    }
   }
 
   .repository {
@@ -26,6 +34,10 @@
 
     &:hover {
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+      @media (max-width: 854px) {
+        touch-action: manipulation;
+      }
     }
 
     &_description {

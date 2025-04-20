@@ -5,6 +5,19 @@
   @include size(100%);
   position: relative;
   display: inline-block;
+
+  @media (max-width: 854px) {
+    .toggleButton {
+      min-height: 48px; 
+      touch-action: manipulation; 
+      
+      &:active {
+        background-color: $bg-color; 
+      }
+    }
+  }
+
+  
 }
 
 .option {

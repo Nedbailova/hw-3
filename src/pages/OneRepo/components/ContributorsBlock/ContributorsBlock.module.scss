@@ -6,6 +6,7 @@
     display: flex;
     gap: 2px;
     margin-bottom: $space-xxs;
+    flex-wrap: wrap;
   }
 
   &_circle {

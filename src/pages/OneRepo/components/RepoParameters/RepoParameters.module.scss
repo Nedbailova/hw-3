@@ -7,6 +7,13 @@
     flex-direction: column;
     gap: $space-xxs;
 
+    @media (max-width: 824px) {
+      flex-direction: row; 
+      align-items: center; 
+      gap: $space-m;
+      justify-content: center;
+    }
+
     &_stars,
     &_watchers,
     &_forks {
@@ -22,6 +29,9 @@
       > :nth-child(2) {
         margin-right: 4px;
       }
+
+      
     }
+    
   }
 }

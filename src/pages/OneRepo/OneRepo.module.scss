@@ -14,6 +14,14 @@
   gap: $space-m;
   align-items: center;
   margin-bottom: 24px;
+  flex-wrap: wrap;
+
+  @media (max-width: 854px) {
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+  }
 
   &_back {
     cursor: pointer;
@@ -28,6 +36,10 @@
     display: block;
     @include square(40px);
     border-radius: $border-radius;
+
+    @media (max-width: 854px) {
+      @include square(80px);
+    }
   }
 }
 
@@ -36,5 +48,11 @@
   &_cont_and_lang {
     display: flex;
     gap: 80px;
+
+    @media (max-width: 854px) {
+      flex-direction: column;
+      gap: 20px;
+    }
+
   }
 }

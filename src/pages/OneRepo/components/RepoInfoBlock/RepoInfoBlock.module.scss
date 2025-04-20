@@ -6,5 +6,11 @@
     display: flex;
     gap: $space-xxs;
     margin-bottom: $space-l;
+    flex-wrap: wrap; 
+
+    @media (max-width: 824px) {
+      flex-wrap: wrap; 
+      justify-content: center;
+    }
   }
 }

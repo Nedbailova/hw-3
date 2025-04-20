@@ -17,6 +17,18 @@
     margin-bottom: $space-xl;
     background-color: $button-primary-bg-disabled;
   }
+
+  @media (max-width: 599px) {
+    width: 100%; 
+    max-width: 360px; 
+    margin: 0 auto; 
+  }
+
+  @media (max-width: 400px) {
+    width: 100%; 
+    max-width: 300px; 
+    margin: 0 auto; 
+  }
 }
 
 .textBlock {

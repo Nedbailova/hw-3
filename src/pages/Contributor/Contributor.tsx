@@ -63,8 +63,8 @@ const Contributor = () => {
         ) : (
           <>
             <div className={styles.name_block}>
-              <ArrowRightIcon className={styles.name_block_back} width={32} height={32} onClick={handleBackClick} />
-              <img className={styles.name_block_img} src={userInfo.avatarUrl} alt={userInfo.login} />
+                <ArrowRightIcon className={styles.name_block_back} width={32} height={32} onClick={handleBackClick} />
+                <img className={styles.name_block_img} src={userInfo.avatarUrl} alt={userInfo.login} />
               {userInfo.name ? (
                 <>
                   <Text view="big-title" weight="bold">

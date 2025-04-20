@@ -30,7 +30,7 @@ const Card: React.FC<CardProps> = ({
   ...props
 }) => {
   return (
-    <div className={`${className} ${styles.card}`} id="card" onClick={onClick} {...props}>
+    <div className={`${className} ${styles.card} card`} id="card" onClick={onClick} {...props}>
       <img src={image} />
       <div className={styles.textBlock}>
         {captionSlot && (

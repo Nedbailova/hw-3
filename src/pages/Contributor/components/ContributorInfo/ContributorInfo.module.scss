@@ -8,5 +8,9 @@
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
+
+    @media (max-width: 854px) {
+      justify-content: center;
+    }
   }
 }
