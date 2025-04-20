@@ -1,0 +1,27 @@
+@use "styles/variables" as *;
+
+.info_block {
+  &_parameters {
+    margin-bottom: $space-l;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xxs;
+
+    &_stars,
+    &_watchers,
+    &_forks {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+      align-items: center;
+
+      > :first-child {
+        margin-right: $space-xxs;
+      }
+
+      > :nth-child(2) {
+        margin-right: 4px;
+      }
+    }
+  }
+}

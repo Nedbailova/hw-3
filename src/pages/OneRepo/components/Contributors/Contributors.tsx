@@ -2,14 +2,14 @@ import React from 'react';
 import styles from './Contributors.module.scss';
 import Text from 'components/Text';
 
-interface ContributorData {
+export interface ContributorData {
   avatarUrl: string;
   username: string;
   name?: string | null;
   contributions?: number;
 }
 
-interface ContributorsProps {
+export interface ContributorsProps {
   contributor: ContributorData;
   onClick: React.MouseEventHandler;
 }

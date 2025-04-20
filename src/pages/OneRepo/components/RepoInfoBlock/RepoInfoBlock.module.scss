@@ -1,0 +1,10 @@
+@use "styles/variables" as *;
+
+.info_block {
+  &_link,
+  &_topics {
+    display: flex;
+    gap: $space-xxs;
+    margin-bottom: $space-l;
+  }
+}

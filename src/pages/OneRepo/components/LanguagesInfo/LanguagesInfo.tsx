@@ -2,12 +2,12 @@ import React from 'react';
 import styles from './LanguagesInfo.module.scss';
 import Text from 'components/Text';
 
-interface LanguageInfo {
+export interface LanguageInfo {
   name: string;
   percent: number;
 }
 
-interface LanguageStatsProps {
+export interface LanguageStatsProps {
   languages: LanguageInfo[];
 }
 
