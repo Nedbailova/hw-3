@@ -105,7 +105,7 @@ const ListRepo = () => {
                 image={repo.owner.avatar_url}
                 title={repo.name}
                 subtitle={repo.description || ''}
-                captionSlot="123    Updated 21 Jul"
+                captionSlot={` ${repo.stargazers_count} ${repo.updated_at}`}
                 onClick={() => handleCardClick(repo.name)}
               />
             ))}

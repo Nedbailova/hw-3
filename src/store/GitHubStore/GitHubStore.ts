@@ -1,6 +1,7 @@
 import { makeObservable, observable, action, computed } from 'mobx';
 import axios from 'axios';
 import { IGitHubStore, Repo } from './types';
+import { formatUpdateDate } from 'utils/formatUpdateDate';
 
 export default class GitHubStore implements IGitHubStore {
   repos: Repo[] = [];
@@ -91,10 +92,10 @@ export default class GitHubStore implements IGitHubStore {
     this.fetchRepos();
   };
 
-  setOrganization = async (org: string) => {
+  setOrganization = (org: string) => {
     this.currentOrganization = org;
     this.currentPage = 1;
-    await this.fetchRepos();
+    this.fetchRepos();
   };
 
   setPage = (page: number) => {
@@ -121,7 +122,12 @@ export default class GitHubStore implements IGitHubStore {
         }
       );
 
-      this.repos = response.data;
+      this.repos = response.data.map(repo => ({
+        ...repo,
+        updated_at: formatUpdateDate(repo.updated_at),
+        stargazers_count: repo.stargazers_count || 0
+      }));
+
       
       const linkHeader = response.headers.link;
       if (linkHeader) {
