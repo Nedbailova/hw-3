@@ -2,6 +2,7 @@ import LinkIcon from 'components/icons/LinkIcon';
 import Text from 'components/Text';
 import Topic from '../Topic/Topic';
 import styles from './RepoInfoBlock.module.scss';
+import React from 'react';
 
 interface RepoInfoBlockProps {
   link: string | null | undefined;
@@ -30,4 +31,4 @@ const RepoInfoBlock = ({ link, newLink, topics}: RepoInfoBlockProps) => (
   </div>
 );
 
-export default RepoInfoBlock;
+export default React.memo(RepoInfoBlock);

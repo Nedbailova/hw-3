@@ -1,0 +1,12 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.additional_info {
+  margin-bottom: 30px;
+
+  .info_item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+}

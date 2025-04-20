@@ -7,10 +7,10 @@ import styles from './Contributor.module.scss';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import { useEffect, useState } from 'react';
 import Loader from 'components/Loader';
-import FollowIcon from 'components/icons/FollowIcon';
-import RepoIcon from 'components/icons/RepoIcon';
 import LinkIcon from 'components/icons/LinkIcon';
-import Card from 'components/Card';
+import ContributorParameters from './components/ContributorParameters';
+import ContributorInfo from './components/ContributorInfo';
+import ContributorRepo from './components/ContributorRepo';
 
 const Contributor = () => {
   const { username } = useParams();
@@ -32,6 +32,14 @@ const Contributor = () => {
   };
 
   const { userInfo, userRepos, isLoading, error } = contributorStore;
+
+  const infoItems = [
+    { label: 'ID:', value: userInfo?.id || '' },
+    { label: 'Email:', value: userInfo?.email || '' },
+    { label: 'Company:', value: userInfo?.company || '' },
+    { label: 'Location:', value: userInfo?.location || '' },
+    { label: 'Blog:', value: userInfo?.blog || '', isLink: true },
+  ].filter((item) => item.value);
 
   return (
     <div className={styles.contributor}>
@@ -91,110 +99,15 @@ const Contributor = () => {
                 </div>
               )}
 
-              <div className={styles.info_block_parameters}>
-                <div className={styles.info_block_parameters_follow}>
-                  <FollowIcon width={16} height={16} color="secondary" useStroke />
-                  <Text view="p-12" weight="bold" color="secondary">
-                    {userInfo.followers}
-                  </Text>
-                  <Text view="p-12" color="secondary">
-                    followers ·
-                  </Text>
-                  <Text view="p-12" weight="bold" color="secondary">
-                    {userInfo.following}
-                  </Text>
-                  <Text view="p-12" color="secondary">
-                    following
-                  </Text>
-                </div>
+              <ContributorParameters
+                followers={userInfo.followers}
+                following={userInfo.following}
+                publicRepos={userInfo.publicRepos}
+              />
 
-                <div className={styles.info_block_parameters_repo}>
-                  <RepoIcon width={16} height={16} color="secondary" />
-                  <Text view="p-12" weight="bold" color="secondary">
-                    {userInfo.publicRepos}
-                  </Text>
-                  <Text view="p-12" color="secondary">
-                    repositories
-                  </Text>
-                </div>
-              </div>
+              {infoItems.length > 0 && <ContributorInfo items={infoItems} />}
 
-              <div className={styles.additional_info}>
-                {userInfo.id && (
-                  <div className={styles.info_item}>
-                    <Text view="p-16" weight="bold">
-                      ID:
-                    </Text>
-                    <Text view="p-16">{userInfo.id}</Text>
-                  </div>
-                )}
-
-                {userInfo.email && (
-                  <div className={styles.info_item}>
-                    <Text view="p-16" weight="bold">
-                      Email:
-                    </Text>
-                    <Text view="p-16">{userInfo.email}</Text>
-                  </div>
-                )}
-
-                {userInfo.company && (
-                  <div className={styles.info_item}>
-                    <Text view="p-16" weight="bold">
-                      Company:
-                    </Text>
-                    <Text view="p-16">{userInfo.company}</Text>
-                  </div>
-                )}
-
-                {userInfo.location && (
-                  <div className={styles.info_item}>
-                    <Text view="p-16" weight="bold">
-                      Location:
-                    </Text>
-                    <Text view="p-16">{userInfo.location}</Text>
-                  </div>
-                )}
-
-                {userInfo.blog && (
-                  <div className={styles.info_item}>
-                    <Text view="p-16" weight="bold">
-                      Blog:
-                    </Text>
-                    <a href={userInfo.blog}>
-                      <Text view="p-16" color="blue">
-                        {userInfo.blog}
-                      </Text>
-                    </a>
-                  </div>
-                )}
-              </div>
-
-              <div className={styles.repositories_block}>
-                <Text view="p-18" weight="bold" className={styles.repositories_block_title}>
-                  Latest Repositories
-                </Text>
-
-                {userRepos.length > 0 ? (
-                  <div className={styles.repositories_list}>
-                    {userRepos.map((repo) => (
-                      <a href={repo.htmlUrl}>
-                        <Card
-                          key={repo.id}
-                          title={repo.name}
-                          subtitle={repo.description || ''}
-                          forksCount={repo.forksCount}
-                          repoLanguage={repo.language}
-                          captionSlot={`${repo.stargazersCount}`}
-                          contentSlot={`Updated: ${new Date(repo.updatedAt).toLocaleDateString()}`}
-                        />
-                      </a>
-                    ))}
-                  </div>
-                ) : (
-                  <Text view="p-16">No repositories found</Text>
-                )}
-              </div>
+              <ContributorRepo repos={userRepos} />
             </div>
           </>
         )}

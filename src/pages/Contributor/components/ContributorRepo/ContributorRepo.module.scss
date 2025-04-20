@@ -1,0 +1,48 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.repositories_block {
+  padding: 10px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  box-sizing: border-box;
+  border: 1px solid $card-image-bg;
+
+  &_title {
+    margin-bottom: 20px;
+  }
+
+  .repositories_list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .repository {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: box-shadow 0.2s;
+
+    &:hover {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    &_description {
+      margin: 10px 0;
+      color: var(--text-secondary);
+    }
+
+    &_meta {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+
+      .meta_item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+  }
+}

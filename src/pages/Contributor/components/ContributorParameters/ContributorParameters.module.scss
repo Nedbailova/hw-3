@@ -1,0 +1,18 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.info_block {
+  &_parameters {
+    margin-bottom: $space-l;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xxs;
+
+    &_follow,
+    &_repo {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+}
