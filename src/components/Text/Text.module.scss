@@ -1,0 +1,91 @@
+@use "styles/variables" as *;
+
+.text {
+  &.maxLines {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.view-title {
+  font-size: $space-xl;
+  font-weight: bold;
+}
+
+.view-big-title {
+  font-size: 44px;
+  line-height: 48px;
+  font-weight: bold;
+}
+
+.view-button {
+  font-size: 18px;
+  line-height: 134%;
+  cursor: pointer;
+}
+
+.view-p-20 {
+  font-size: $space-l;
+  line-height: $space-xl;
+}
+
+.view-p-18 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.view-p-16 {
+  font-size: $space-m;
+  line-height: $space-l;
+}
+
+.view-p-14 {
+  font-size: $space-s;
+  line-height: 18px;
+}
+
+.view-p-12 {
+  font-size: $space-xs;
+  line-height: 100%;
+}
+
+.view-p-10 {
+  font-size: 10px;
+}
+
+.weight-normal {
+  font-weight: 400;
+}
+
+.weight-medium {
+  font-weight: 500;
+}
+
+.weight-bold {
+  font-weight: 700;
+}
+
+.color-primary {
+  color: $text-primary;
+}
+
+.color-secondary {
+  color: $text-secondary;
+}
+
+.color-accent {
+  color: $text-accent;
+}
+
+.color-blue {
+  color: $text-blue;
+}
+
+.color-another-blue {
+  color: $text-another-blue;
+}
+
+.color-secondary-dark {
+  color: $text-secondary-dark;
+}

@@ -1,0 +1,56 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.multidropdown {
+  @include size(100%);
+  position: relative;
+  display: inline-block;
+
+  @media (max-width: 854px) {
+    .toggleButton {
+      min-height: 48px; 
+      touch-action: manipulation; 
+      
+      &:active {
+        background-color: $bg-color; 
+      }
+    }
+  }
+
+  
+}
+
+.option {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: $space-xxs;
+  max-height: 300px;
+  padding: 0;
+  background-color: $white;
+  border-radius: $border-radius;
+  box-shadow: $card-shadow;
+  z-index: 1000;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.textOption {
+  display: block;
+  padding: $space-s $space-xs;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    color: $text-secondary;
+  }
+}
+
+.selected {
+  color: $text-accent;
+}
+
+.disabledInput {
+  pointer-events: none;
+}

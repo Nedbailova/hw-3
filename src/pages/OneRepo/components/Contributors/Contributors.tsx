@@ -1,25 +1,34 @@
-import './Contributors.scss';
+import React from 'react';
+import styles from './Contributors.module.scss';
 import Text from 'components/Text';
 
-interface ContributorData {
+export interface ContributorData {
   avatarUrl: string;
   username: string;
   name?: string | null;
   contributions?: number;
 }
 
-interface ContributorsProps {
+export interface ContributorsProps {
   contributor: ContributorData;
+  onClick: React.MouseEventHandler;
 }
 
-const Contributors = ({ contributor }: ContributorsProps) => {
+
+const Contributors = ({ contributor, onClick }: ContributorsProps) => {
   return (
-    <div className="сontributor">
-      <img className="сontributor_img" src={contributor.avatarUrl} />
-      <Text view="p-16" weight="bold" children={contributor.username} />
-      {contributor.name && <Text view="p-16" color="secondary" children={contributor.name} />}
+    <div className={styles.contributor} onClick={onClick}>
+      <img className={styles.contributor_img} src={contributor.avatarUrl} alt={contributor.username} />
+      <Text view="p-16" weight="bold">
+        {contributor.username}
+      </Text>
+      {contributor.name && (
+        <Text view="p-16" color="secondary">
+          {contributor.name}
+        </Text>
+      )}
     </div>
   );
 };
 
-export default Contributors;
+export default React.memo(Contributors);

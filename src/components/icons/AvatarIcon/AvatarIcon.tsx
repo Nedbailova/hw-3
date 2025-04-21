@@ -1,8 +1,8 @@
 import AvatarImg from './images/AvatarImg.png';
-import './AvatarIcon.scss';
+import styles from './AvatarIcon.module.scss';
 
 const AvatarIcon = () => {
-  return <img className="avatar_icon" src={AvatarImg} alt="Avatar" />;
+  return <img className={styles.avatarIcon} src={AvatarImg} alt="Avatar" />;
 };
 
 export default AvatarIcon;

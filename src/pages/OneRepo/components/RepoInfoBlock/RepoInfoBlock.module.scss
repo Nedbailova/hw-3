@@ -1,0 +1,16 @@
+@use "styles/variables" as *;
+
+.info_block {
+  &_link,
+  &_topics {
+    display: flex;
+    gap: $space-xxs;
+    margin-bottom: $space-l;
+    flex-wrap: wrap; 
+
+    @media (max-width: 824px) {
+      flex-wrap: wrap; 
+      justify-content: center;
+    }
+  }
+}

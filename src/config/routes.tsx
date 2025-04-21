@@ -1,7 +1,8 @@
 import { Navigate, RouteObject } from 'react-router-dom';
 import App from '../App';
-import ListRepo from '../pages/ListRepo/ListRepo';
-import OneRepo from '../pages/OneRepo/OneRepo';
+import ListRepo from 'pages/ListRepo/ListRepo';
+import OneRepo from 'pages/OneRepo/OneRepo';
+import Contributor from 'pages/Contributor/Contributor';
 
 export const routesConfig: RouteObject[] = [
   {
@@ -9,17 +10,21 @@ export const routesConfig: RouteObject[] = [
     element: <App />,
     children: [
       {
-        path: '/Repos',
+        path: '/repos',
         element: <ListRepo />,
       },
       {
-        path: '/Repos/:name',
+        path: '/repos/:name',
         element: <OneRepo />,
+      },
+      {
+        path: '/repos/:repoName/contributors/:username',
+        element: <Contributor />,
       },
     ],
   },
   {
     path: '*',
-    element: <Navigate to="/" replace />,
+    element: <Navigate to="/repos" replace />,
   },
 ];

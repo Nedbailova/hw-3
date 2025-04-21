@@ -1,0 +1,58 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.one_repo_page {
+  background-color: $white;
+}
+
+.header_block {
+  margin-bottom: 30px;
+}
+
+.name_block {
+  display: flex;
+  gap: $space-m;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+
+  @media (max-width: 854px) {
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+
+  &_back {
+    cursor: pointer;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateX(-5px);
+    }
+  }
+
+  &_img {
+    display: block;
+    @include square(40px);
+    border-radius: $border-radius;
+
+    @media (max-width: 854px) {
+      @include square(80px);
+    }
+  }
+}
+
+.info_block {
+  margin-bottom: 24px;
+  &_cont_and_lang {
+    display: flex;
+    gap: 80px;
+
+    @media (max-width: 854px) {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+  }
+}

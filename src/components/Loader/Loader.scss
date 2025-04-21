@@ -1,0 +1,30 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.loader {
+
+  animation: rotate 1s linear infinite;
+  transform-origin: center center;
+
+  &-s {
+    @include square($space-xl);
+  }
+
+  &-m {
+    @include square(48px);
+  }
+
+  &-l,
+  &-undefined {
+    @include square(60px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg); 
+  }
+}

@@ -1,0 +1,49 @@
+@use "styles/variables" as *;
+
+.readme_block {
+  border: 1px solid $button-primary-bg-disabled;
+  margin-bottom: 180px;
+
+  &_title {
+    padding: $space-m;
+  }
+}
+
+.markdown_body {
+  line-height: 1.5;
+  color: #24292e;
+  padding: 32px;
+  overflow-wrap: break-word;
+
+  h1,
+  h2 {
+    border-bottom: 1px solid $markdown-h;
+    padding-bottom: 0.3em;
+    margin: 1em 0 0.8em;
+  }
+
+  ul {
+    padding-left: 2em;
+    list-style-type: disc;
+    margin-bottom: 1em;
+
+    li {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  a {
+    color: $markdown-a;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  code {
+    background-color: $markdown-code;
+    border-radius: 3px;
+    padding: 0.2em 0.4em;
+  }
+}

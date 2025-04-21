@@ -12,7 +12,10 @@
       "pages/*": ["pages/*"],
       "assets/*": ["assets/*"],
       "config/*": ["config/*"],
-      "styles/*": ["styles/*"]
+      "styles/*": ["styles/*"],
+      "store/*": ["store/*"],
+      "utils/*": ["utils/*"],
+      "types/*": ["types/*"]
     }
   }
 }

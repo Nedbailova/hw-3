@@ -1,6 +1,8 @@
 import { routesConfig } from "./config/routes";
+import './Roboto/fonts.css';
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router";
+import 'config/configureMobX';
 
 const router = createBrowserRouter(routesConfig);
 

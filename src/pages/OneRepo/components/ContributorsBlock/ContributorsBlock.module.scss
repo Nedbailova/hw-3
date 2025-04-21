@@ -1,0 +1,25 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.contributor {
+  &_title {
+    display: flex;
+    gap: 2px;
+    margin-bottom: $space-xxs;
+    flex-wrap: wrap;
+  }
+
+  &_circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include circle($space-m);
+    background-color: $contrib-circle;
+  }
+}
+
+.contributors {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xxs;
+}

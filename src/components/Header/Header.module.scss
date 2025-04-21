@@ -1,0 +1,30 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.header {
+  @include size(100%, 64px);
+  border-bottom: 2px solid $card-image-bg;
+  background-color: $bg-color;
+}
+
+.headerBlock {
+  margin-bottom: 30px;
+}
+
+.headerBlockContent {
+  display: flex;
+  padding-top: $space-m;
+  box-sizing: border-box;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+.gitBlock {
+  display: flex;
+  gap: $space-xl;
+  align-items: center;
+
+  p {
+    text-align: center;
+  }
+}

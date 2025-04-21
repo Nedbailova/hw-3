@@ -1,0 +1,69 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.contributor {
+  .header_block {
+    margin-bottom: 40px;
+  }
+
+  .name_block {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+
+    @media (max-width: 854px) {
+      flex-direction: row;
+      justify-content: center;
+      text-align: center;
+      flex-wrap: wrap;
+    }
+
+    &_back {
+      cursor: pointer;
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: translateX(-5px);
+      }
+    }
+
+    &_img {
+      @include circle(80px);
+      flex-shrink: 0;
+
+      @media (max-width: 854px) {
+        touch-action: manipulation;
+      }
+    }
+  }
+
+  .info_block {
+    &_link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+
+      @media (max-width: 854px) {
+        justify-content: center;
+      }
+    }
+
+    .bio {
+      margin-bottom: 20px;
+      color: var(--text-secondary);
+
+      @media (max-width: 854px) {
+        justify-content: center;
+      }
+    }
+  }
+
+  .error,
+  .not-found {
+    color: var(--error);
+    margin-left: 20px;
+  }
+}

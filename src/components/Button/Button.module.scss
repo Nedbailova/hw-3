@@ -1,0 +1,60 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.button {
+  padding: $space-s $space-l;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $space-xxs;
+  font-size: 18px;
+  font-family: Roboto, sans-serif;
+  line-height: 134%;
+  background-color: $brand;
+  color: $button-primary-text;
+  border: none;
+  cursor: pointer;
+
+  svg {
+    display: block;
+  }
+
+  &:hover {
+    background-color: $brand-hover;
+  }
+
+  &:active {
+    background-color: $brand-active;
+  }
+
+  &:disabled {
+    background-color: $button-primary-bg-disabled;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.search {
+  border-radius: $border-radius;
+}
+
+.pagination_button {
+  @include size(38px, 42px);
+}
+
+.active {
+  background-color: $brand;
+  color: $button-primary-text;
+}
+
+.inactive {
+  background-color: $bg-color;
+  color: rgba(0, 0, 0, 1);
+
+  &:hover {
+    color: $white;
+  }
+}

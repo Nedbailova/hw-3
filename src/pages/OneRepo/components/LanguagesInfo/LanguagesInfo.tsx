@@ -1,13 +1,13 @@
 import React from 'react';
-import './LanguagesInfo.scss';
+import styles from './LanguagesInfo.module.scss';
 import Text from 'components/Text';
 
-interface LanguageInfo {
+export interface LanguageInfo {
   name: string;
   percent: number;
 }
 
-interface LanguageStatsProps {
+export interface LanguageStatsProps {
   languages: LanguageInfo[];
 }
 
@@ -26,12 +26,12 @@ const LanguagesInfo: React.FC<LanguageStatsProps> = ({ languages }) => {
   };
 
   return (
-    <div className="language_stats">
-      <div className="progress_bar">
+    <div className={styles.language_stats}>
+      <div className={styles.progress_bar}>
         {sortedLanguages.map((lang) => (
           <div
             key={lang.name}
-            className="progress_segment"
+            className={styles.progress_segment}
             style={{
               width: `${lang.percent}%`,
               backgroundColor: languageColors[lang.name] || languageColors.Default,
@@ -39,12 +39,12 @@ const LanguagesInfo: React.FC<LanguageStatsProps> = ({ languages }) => {
           />
         ))}
       </div>
-      <div className="language_list">
+      <div className={styles.language_list}>
         {sortedLanguages.map((lang) => (
-          <div className="language_item">
-            <div className="language_info">
+          <div key={lang.name} className={styles.language_item}>
+            <div className={styles.language_info}>
               <div
-                className="language_color"
+                className={styles.language_color}
                 style={{ backgroundColor: languageColors[lang.name] || languageColors.Default }}
               />
               <Text view="p-14">{lang.name}</Text>
@@ -59,4 +59,4 @@ const LanguagesInfo: React.FC<LanguageStatsProps> = ({ languages }) => {
   );
 };
 
-export default LanguagesInfo;
+export default React.memo(LanguagesInfo);
