@@ -1,7 +1,7 @@
 export interface Repo {
   id: number;
   name: string;
-  description: string | null;
+  description?: string | null ;
   stargazers_count: number;  
   updated_at: string;
   owner: {
@@ -17,3 +17,4 @@ export interface IGitHubStore {
   totalRepos: number;
   getReposPage(page: number, perPage: number): Repo[];
 }
+
