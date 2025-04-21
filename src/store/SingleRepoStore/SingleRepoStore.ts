@@ -11,7 +11,7 @@ export default class SingleRepoStore {
   newLink = '';
   isLoading = false;
   error: string | null = null;
-  private defaultOrganization = "ktsstudio";
+  private defaultOrganization = 'ktsstudio';
 
   constructor() {
     makeObservable(this, {
@@ -30,8 +30,8 @@ export default class SingleRepoStore {
   }
 
   async fetchRepoData(repoName: string, orgName?: string) {
-    const organization = orgName || this.defaultOrganization; 
-    
+    const organization = orgName || this.defaultOrganization;
+
     runInAction(() => {
       this.isLoading = true;
       this.error = null;
@@ -43,7 +43,6 @@ export default class SingleRepoStore {
       const [repoResponse, readmeResponse, languagesResponse, contributorsResponse] = await Promise.all([
         axios.get(`https://api.github.com/repos/${organization}/${repoName}`, {
           headers: { Accept: 'application/vnd.github+json' },
-          
         }),
         this.fetchReadme(organization, repoName),
         this.fetchLanguages(organization, repoName),
@@ -81,10 +80,9 @@ export default class SingleRepoStore {
 
   private async fetchReadme(orgName: string, repoName: string): Promise<string> {
     try {
-      const response = await axios.get(
-        `https://api.github.com/repos/${orgName}/${repoName}/readme`,
-        { headers: { Accept: 'application/vnd.github.html' } }
-      );
+      const response = await axios.get(`https://api.github.com/repos/${orgName}/${repoName}/readme`, {
+        headers: { Accept: 'application/vnd.github.html' },
+      });
       return removeSVGTags(response.data);
     } catch {
       return '';
@@ -95,7 +93,7 @@ export default class SingleRepoStore {
     try {
       const response = await axios.get<Record<string, number>>(
         `https://api.github.com/repos/${orgName}/${repoName}/languages`,
-        { headers: { Accept: 'application/vnd.github+json' } }
+        { headers: { Accept: 'application/vnd.github+json' } },
       );
 
       const totalBytes = Object.values(response.data).reduce((sum, bytes) => sum + bytes, 0);
@@ -111,17 +109,16 @@ export default class SingleRepoStore {
   private async fetchContributors(orgName: string, repoName: string): Promise<Contributor[]> {
     try {
       const response = await axios.get<GitHubContributor[]>(
-        `https://api.github.com/repos/${orgName}/${repoName}/contributors`, 
-        { headers: { Accept: 'application/vnd.github+json' } }
+        `https://api.github.com/repos/${orgName}/${repoName}/contributors`,
+        { headers: { Accept: 'application/vnd.github+json' } },
       );
 
       const contributors = await Promise.all(
         response.data.map(async (contributor) => {
           try {
-            const userResponse = await axios.get<GitHubUser>(
-              `https://api.github.com/users/${contributor.login}`,
-              { headers: { Accept: 'application/vnd.github+json' } }
-            );
+            const userResponse = await axios.get<GitHubUser>(`https://api.github.com/users/${contributor.login}`, {
+              headers: { Accept: 'application/vnd.github+json' },
+            });
             return {
               avatarUrl: contributor.avatar_url,
               username: contributor.login,
@@ -136,7 +133,7 @@ export default class SingleRepoStore {
               contributions: contributor.contributions,
             };
           }
-        })
+        }),
       );
 
       return sortContributors(contributors);
@@ -144,10 +141,4 @@ export default class SingleRepoStore {
       return [];
     }
   }
-
-  
-
- 
-
-  
 }

@@ -147,6 +147,7 @@ export default class GitHubStore implements IGitHubStore {
       this.isLoading = false;
     }
   }
+  
 
   get totalRepos() {
     return this.repos.length;
