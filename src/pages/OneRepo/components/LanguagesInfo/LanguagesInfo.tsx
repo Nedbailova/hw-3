@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import styles from './LanguagesInfo.module.scss';
 import Text from 'components/Text';
 
@@ -11,7 +12,7 @@ export interface LanguageStatsProps {
   languages: LanguageInfo[];
 }
 
-const LanguagesInfo: React.FC<LanguageStatsProps> = ({ languages }) => {
+const LanguagesInfo: React.FC<LanguageStatsProps> = observer(({ languages }) => {
   const sortedLanguages = [...languages].sort((a, b) => b.percent - a.percent);
 
   const languageColors: Record<string, string> = {
@@ -57,6 +58,6 @@ const LanguagesInfo: React.FC<LanguageStatsProps> = ({ languages }) => {
       </div>
     </div>
   );
-};
+});
 
 export default React.memo(LanguagesInfo);

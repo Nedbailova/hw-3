@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import MultiDropdown, { Option } from 'components/MultiDropdown';
 import { useSearchParams } from 'react-router-dom';
 import { repoTypeOptions, RepoTypes } from 'types/repoTypes';
+import { observer } from 'mobx-react-lite';
 
 export type TypeMultidropdownProps = {
   className?: string;
@@ -9,7 +10,7 @@ export type TypeMultidropdownProps = {
   initialSelected?: string[];
 };
 
-const TypeMultidropdown: React.FC<TypeMultidropdownProps> = ({ onChange, initialSelected = ['all'] }) => {
+const TypeMultidropdown: React.FC<TypeMultidropdownProps> = observer(({ onChange, initialSelected = ['all'] }) => {
   const [searchParams] = useSearchParams();
   const urlTypes = searchParams.get('types');
 
@@ -55,6 +56,6 @@ const TypeMultidropdown: React.FC<TypeMultidropdownProps> = ({ onChange, initial
       getTitle={getTypesTitle}
     />
   );
-};
+});
 
 export default React.memo(TypeMultidropdown);

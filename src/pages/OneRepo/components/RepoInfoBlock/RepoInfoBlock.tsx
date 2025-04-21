@@ -3,6 +3,7 @@ import Text from 'components/Text';
 import Topic from '../Topic/Topic';
 import styles from './RepoInfoBlock.module.scss';
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 interface RepoInfoBlockProps {
   link: string | null | undefined;
@@ -10,7 +11,7 @@ interface RepoInfoBlockProps {
   topics: string[];
 }
 
-const RepoInfoBlock = ({ link, newLink, topics}: RepoInfoBlockProps) => (
+const RepoInfoBlock =  observer(({ link, newLink, topics}: RepoInfoBlockProps) => (
   <div className={styles.info_block}>
     {link && (
       <div className={styles.info_block_link}>
@@ -29,6 +30,6 @@ const RepoInfoBlock = ({ link, newLink, topics}: RepoInfoBlockProps) => (
       ))}
     </div>
   </div>
-);
+));
 
 export default React.memo(RepoInfoBlock);

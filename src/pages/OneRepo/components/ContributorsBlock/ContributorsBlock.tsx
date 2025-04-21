@@ -3,13 +3,14 @@ import Contributors from '../Contributors/Contributors';
 import styles from './ContributorsBlock.module.scss';
 import React from 'react';
 import { Contributor } from 'store/SingleRepoStore/types';
+import { observer } from 'mobx-react-lite';
 
 interface ContributorsSectionProps {
   contributors: Contributor[];
   onContributorClick: (username: string) => void;
 }
 
-const ContributorsBlock = ({ contributors, onContributorClick }: ContributorsSectionProps) => (
+const ContributorsBlock = observer(({ contributors, onContributorClick }: ContributorsSectionProps) => (
   <div className={styles.info_cont}>
     <div className={styles.contributor_title}>
       <Text view="p-18" weight="bold">
@@ -27,6 +28,6 @@ const ContributorsBlock = ({ contributors, onContributorClick }: ContributorsSec
       ))}
     </div>
   </div>
-);
+));
 
 export default React.memo(ContributorsBlock);

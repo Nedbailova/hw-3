@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Input.module.scss';
 
+
 export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> & {
   value: string;
   onChange: (value: string) => void;

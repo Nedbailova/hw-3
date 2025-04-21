@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Contributors.module.scss';
 import Text from 'components/Text';
+import { observer } from 'mobx-react-lite';
 
 export interface ContributorData {
   avatarUrl: string;
@@ -15,7 +16,7 @@ export interface ContributorsProps {
 }
 
 
-const Contributors = ({ contributor, onClick }: ContributorsProps) => {
+const Contributors = observer(({ contributor, onClick }: ContributorsProps) => {
   return (
     <div className={styles.contributor} onClick={onClick}>
       <img className={styles.contributor_img} src={contributor.avatarUrl} alt={contributor.username} />
@@ -29,6 +30,6 @@ const Contributors = ({ contributor, onClick }: ContributorsProps) => {
       )}
     </div>
   );
-};
+});
 
 export default React.memo(Contributors);

@@ -2,6 +2,7 @@ import Text from 'components/Text';
 import Card from 'components/Card';
 import styles from './ContributorRepo.module.scss';
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 
 interface Repository {
   id: number;
@@ -14,7 +15,7 @@ interface Repository {
   updatedAt: string;
 }
 
-const ContributorRepo = ({ repos }: { repos: Repository[] }) => (
+const ContributorRepo = observer(({ repos }: { repos: Repository[] }) => (
   <div className={styles.repositories_block}>
     <Text view="p-18" weight="bold" className={styles.repositories_block_title}>
       Latest Repositories
@@ -39,6 +40,6 @@ const ContributorRepo = ({ repos }: { repos: Repository[] }) => (
       <Text view="p-16">No repositories found</Text>
     )}
   </div>
-);
+));
 
 export default React.memo(ContributorRepo);

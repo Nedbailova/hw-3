@@ -3,6 +3,7 @@ import styles from './Pagination.module.scss';
 import Button from '../Button';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon';
+import { observer } from 'mobx-react-lite';
 
 interface PaginationProps {
   currentPage: number;
@@ -10,7 +11,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination: FC<PaginationProps> = observer(({ currentPage, totalPages, onPageChange }) => {
   const getVisiblePages = () => {
     const visiblePages = [];
     const maxVisible = 3;
@@ -89,6 +90,6 @@ const Pagination: FC<PaginationProps> = ({ currentPage, totalPages, onPageChange
       />
     </div>
   );
-};
+});
 
 export default React.memo(Pagination);

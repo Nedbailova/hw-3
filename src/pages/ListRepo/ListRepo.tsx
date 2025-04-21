@@ -15,6 +15,7 @@ import Loader from 'components/Loader';
 import SearchIcon from 'components/icons/SearchIcon';
 import useRecentRepos from './useRecentRepos';
 
+
 const ListRepo = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
