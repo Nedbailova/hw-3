@@ -1,54 +1,63 @@
-# React + TypeScript + Vite
+# [Metaclass](https://metaclass.kts.studio/beginner_react) выпускной проект
+Выполнила Недбайлова Анна
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Github Page - https://nedbailova.github.io/hw-3/#/repos
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Установка и запуск
 
-## Expanding the ESLint configuration
+```bash
+# clone repo
+git clone https://github.com/Nedbailova/hw-3.git
+cd hw-3   
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# run app
+yarn dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Задача
+Разработать приложение Github client, в котором можно получать список репозиториев по введенной организации и полную информацию о репозитории. 
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Технологии: 
+1. Проект написан на React и создан с помощью Vite
+2. Весь код написан на TypeScript
+3. Стили написаны на css-modules с использованием scss
+4. В проекте подключен линтер, алиасы и роутинг
+5. Логика получения данных написана на MobX, разделенная на Mobx-сторы.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### Реализовано:
+- Страница списка репозиториев с получением данных из API Github:
+  - реализовано получение репозиториев по введеной в поиске организации;
+  - реализована пагинация репозиториев через API;
+  - реализована возможность фильтрации репозиториев по типам;
+  - реализовано сохранение 6 последних посещенных репозиториев через localStorage;
+  - реализовано сохранение текущего состояния страницы через query-параметры (введенная организация, категории в фильтрации и страница пагинации);
+  - реализован компонент лоадер с анимацией.
+- Страница информации о репозитории с получением данных из API Github:
+  - реализовано получение основной информации о репозитории:
+    - изображение организации;
+    - название репозитория;
+    - параметры (количество звезд, форков и просмотров);
+    - тэги репозитория;
+    - используемые в репозитории языки программирования (список + процентная шкала);
+    - список контрибьютеров;
+    - readme, получаемое в формате html через Github Api.
+  - реализована возможность перейти в контрибьютера и получить подробную о нем информацию.
+- Страница информация о контрибьютере с получением данных из  API Github:
+  - реализовано получение основной информации о контрибьютере:
+    -  никнейм и имя;
+    -  ссылка на гитхаб профиль;
+    -  описание профиля;
+    -  параметры (количество подписчиков, подписок и репозиториев)
+    -  заполненная информация из профиля (ID, компания, локация, блог...)
+    -  список репозиториев пользователя с их названием, описанием и датой последнего обновления. Репозитории отсортированы в порядке их последнего обновления.
+- Реализована адаптивность всех страниц под мобильные устройства.
+
+Для проекта были реализованы следующие базовые компоненты:
+1. Лоадер;
+2. Кнопка;
+3. Текст;
+4. Иконка;
+5. Карточка;
+6. Поле ввода;
+7. Выпадающий список с множественным выбором (Фильтр);
