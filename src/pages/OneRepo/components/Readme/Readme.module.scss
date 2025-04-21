@@ -14,27 +14,35 @@
   color: #24292e;
   padding: 32px;
   overflow-wrap: break-word;
+  word-break: break-word;
+  overflow-x: auto;
 
   h1,
   h2 {
     border-bottom: 1px solid $markdown-h;
     padding-bottom: 0.3em;
     margin: 1em 0 0.8em;
+    overflow-wrap: break-word;
   }
 
   ul {
     padding-left: 2em;
     list-style-type: disc;
     margin-bottom: 1em;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    
 
     li {
       margin-bottom: 0.5em;
+      overflow-wrap: break-word;
     }
   }
 
   a {
     color: $markdown-a;
     text-decoration: none;
+    overflow-wrap: break-word;
 
     &:hover {
       text-decoration: underline;
@@ -45,5 +53,8 @@
     background-color: $markdown-code;
     border-radius: 3px;
     padding: 0.2em 0.4em;
+    overflow-wrap: break-word;
   }
+
+  
 }

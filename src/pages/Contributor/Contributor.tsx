@@ -19,8 +19,7 @@ const Contributor = () => {
   const org = searchParams.get('org');
   const [contributorStore] = useState(() => new ContributorStore());
 
-  const repoName = location.pathname.split('/')[2];
-
+  const { repoName } = useParams();
   useEffect(() => {
     if (username) {
       contributorStore.fetchContributorData(username);
@@ -63,8 +62,8 @@ const Contributor = () => {
         ) : (
           <>
             <div className={styles.name_block}>
-                <ArrowRightIcon className={styles.name_block_back} width={32} height={32} onClick={handleBackClick} />
-                <img className={styles.name_block_img} src={userInfo.avatarUrl} alt={userInfo.login} />
+              <ArrowRightIcon className={styles.name_block_back} width={32} height={32} onClick={handleBackClick} />
+              <img className={styles.name_block_img} src={userInfo.avatarUrl} alt={userInfo.login} />
               {userInfo.name ? (
                 <>
                   <Text view="big-title" weight="bold">

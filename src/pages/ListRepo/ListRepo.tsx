@@ -31,7 +31,7 @@ const ListRepo = () => {
     navigate(`?${new URLSearchParams(githubStore.getQueryParams)}`, { replace: true });
   }, [githubStore.currentOrganization, githubStore.currentPage, githubStore.selectedRepoTypes]);
 
-  const handleCardClick = (repo: Repo,) => {
+  const handleCardClick = (repo: Repo) => {
     const org = githubStore.currentOrganization;
     addRecentRepo({
       name: repo.name,
@@ -123,7 +123,9 @@ const ListRepo = () => {
             ))}
           </div>
         ) : (
-          <Text view="p-18">No repositories found</Text>
+          <div className={styles.error_text}>
+            <Text view="p-18">No repositories found</Text>
+          </div>
         )}
 
         <div className={styles.pagination_block}>
@@ -151,6 +153,7 @@ const ListRepo = () => {
                     onClick={() => {
                       githubStore.setOrganization(repo.org);
                       navigate(`/repos/${repo.name}?org=${repo.org}`);
+                      window.scrollTo(0, 0);
                     }}
                   />
                 );

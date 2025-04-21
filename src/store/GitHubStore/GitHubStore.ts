@@ -65,7 +65,7 @@ export default class GitHubStore implements IGitHubStore {
 
   get getQueryParams() {
     const params: Record<string, string> = {};
-    
+
     if (this.currentOrganization && this.currentOrganization !== 'ktsstudio') {
       params.org = this.currentOrganization;
     }
@@ -74,8 +74,10 @@ export default class GitHubStore implements IGitHubStore {
       params.page = this.currentPage.toString();
     }
 
-    if (this.selectedRepoTypes.length > 0 && 
-        !(this.selectedRepoTypes.length === 1 && this.selectedRepoTypes[0] === 'all')) {
+    if (
+      this.selectedRepoTypes.length > 0 &&
+      !(this.selectedRepoTypes.length === 1 && this.selectedRepoTypes[0] === 'all')
+    ) {
       params.types = this.selectedRepoTypes.join(',');
     }
 
@@ -83,12 +85,10 @@ export default class GitHubStore implements IGitHubStore {
   }
 
   setRepoTypes = (types: string[]) => {
-    const filteredTypes = types.includes('all') && types.length > 1 
-      ? types.filter((type) => type !== 'all') 
-      : types;
+    const filteredTypes = types.includes('all') && types.length > 1 ? types.filter((type) => type !== 'all') : types;
 
     this.selectedRepoTypes = filteredTypes.length > 0 ? filteredTypes : ['all'];
-    this.currentPage = 1; 
+    this.currentPage = 1;
     this.fetchRepos();
   };
 
@@ -108,27 +108,23 @@ export default class GitHubStore implements IGitHubStore {
     this.error = null;
 
     try {
-      const response = await axios.get<Repo[]>(
-        `https://api.github.com/orgs/${this.currentOrganization}/repos`,
-        {
-          params: {
-            type: this.selectedRepoTypes.join(','),
-            per_page: this.pageSize,
-            page: this.currentPage,
-          },
-          headers: { 
-            Accept: 'application/vnd.github+json',
-          },
-        }
-      );
+      const response = await axios.get<Repo[]>(`https://api.github.com/orgs/${this.currentOrganization}/repos`, {
+        params: {
+          type: this.selectedRepoTypes.join(','),
+          per_page: this.pageSize,
+          page: this.currentPage,
+        },
+        headers: {
+          Accept: 'application/vnd.github+json',
+        },
+      });
 
-      this.repos = response.data.map(repo => ({
+      this.repos = response.data.map((repo) => ({
         ...repo,
         updated_at: formatUpdateDate(repo.updated_at),
-        stargazers_count: repo.stargazers_count || 0
+        stargazers_count: repo.stargazers_count || 0,
       }));
 
-      
       const linkHeader = response.headers.link;
       if (linkHeader) {
         const matches = linkHeader.match(/page=(\d+)>; rel="last"/);
@@ -147,7 +143,6 @@ export default class GitHubStore implements IGitHubStore {
       this.isLoading = false;
     }
   }
-  
 
   get totalRepos() {
     return this.repos.length;
