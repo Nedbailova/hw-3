@@ -46,5 +46,6 @@ export const languageColors: Record<string, string> = {
     Zig: '#ec915c',
     Nim: '#ffc200',
     Crystal: '#000100',
+    CMake: "#ec915c",
     Default: '#cccccc',
   };

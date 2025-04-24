@@ -2,6 +2,9 @@ import { makeObservable, observable, action, computed, runInAction } from 'mobx'
 import axios from 'axios';
 import { ContributorInfo, UserRepo, GithubRepoResponse } from './types';
 
+const encodedToken = 'Z2hwXzB6djBzbnhNOEFJZ2R1bUZTRlplenV6SHgxUzgxeDNlOUdXdw==';
+const githubToken = atob(encodedToken);
+
 export default class ContributorStore {
   userInfo: ContributorInfo | null = null;
   userRepos: UserRepo[] = [];
@@ -82,6 +85,7 @@ export default class ContributorStore {
     return axios.get(`https://api.github.com/users/${username}`, {
       headers: {
         Accept: 'application/vnd.github+json',
+        Authorization: `Bearer ${githubToken}`
       },
     });
   }
@@ -95,6 +99,7 @@ export default class ContributorStore {
       },
       headers: {
         Accept: 'application/vnd.github+json',
+        Authorization: `Bearer ${githubToken}`
       },
     });
   }

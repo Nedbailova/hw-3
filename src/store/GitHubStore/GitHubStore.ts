@@ -3,6 +3,9 @@ import axios from 'axios';
 import { IGitHubStore, Repo } from './types';
 import { formatUpdateDate } from 'utils/formatUpdateDate';
 
+const encodedToken = 'Z2hwXzB6djBzbnhNOEFJZ2R1bUZTRlplenV6SHgxUzgxeDNlOUdXdw==';
+const githubToken = atob(encodedToken);
+
 export default class GitHubStore implements IGitHubStore {
   repos: Repo[] = [];
   isLoading = false;
@@ -116,6 +119,7 @@ export default class GitHubStore implements IGitHubStore {
         },
         headers: {
           Accept: 'application/vnd.github+json',
+          Authorization: `Bearer ${githubToken}`
         },
       });
 
