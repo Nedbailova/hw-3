@@ -8,6 +8,12 @@
     margin-bottom: 30px;
   }
 
+  .loader_block{
+    height: 100px;
+    width: 100px;
+    align-items: center;
+  }
+
   .repo_block {
     display: grid;
     grid-template-columns: repeat(3, 360px);
@@ -79,4 +85,8 @@
   &_title {
     margin-bottom: 20px;
   }
+}
+
+.error_text{
+  margin-bottom: 20px;
 }

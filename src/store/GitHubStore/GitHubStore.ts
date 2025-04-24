@@ -116,6 +116,7 @@ export default class GitHubStore implements IGitHubStore {
         },
         headers: {
           Accept: 'application/vnd.github+json',
+          Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`
         },
       });
 
@@ -137,7 +138,6 @@ export default class GitHubStore implements IGitHubStore {
         this.totalCount = response.data.length;
       }
     } catch (error) {
-      this.error = 'Failed to fetch repositories';
       console.error(error);
     } finally {
       this.isLoading = false;

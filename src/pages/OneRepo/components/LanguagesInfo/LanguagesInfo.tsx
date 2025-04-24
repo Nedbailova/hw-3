@@ -23,6 +23,7 @@ const LanguagesInfo: React.FC<LanguageStatsProps> = observer(({ languages }) => 
     SCSS: '#c6538c',
     Python: '#3572A5',
     Java: '#b07219',
+    Shell: "",
     Default: '#ccc',
   };
 

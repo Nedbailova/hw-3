@@ -42,7 +42,7 @@ export default class SingleRepoStore {
     try {
       const [repoResponse, readmeResponse, languagesResponse, contributorsResponse] = await Promise.all([
         axios.get(`https://api.github.com/repos/${organization}/${repoName}`, {
-          headers: { Accept: 'application/vnd.github+json' },
+          headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}` },
         }),
         this.fetchReadme(organization, repoName),
         this.fetchLanguages(organization, repoName),
@@ -81,7 +81,7 @@ export default class SingleRepoStore {
   private async fetchReadme(orgName: string, repoName: string): Promise<string> {
     try {
       const response = await axios.get(`https://api.github.com/repos/${orgName}/${repoName}/readme`, {
-        headers: { Accept: 'application/vnd.github.html' },
+        headers: { Accept: 'application/vnd.github.html', Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}` },
       });
       return removeSVGTags(response.data);
     } catch {
@@ -93,7 +93,7 @@ export default class SingleRepoStore {
     try {
       const response = await axios.get<Record<string, number>>(
         `https://api.github.com/repos/${orgName}/${repoName}/languages`,
-        { headers: { Accept: 'application/vnd.github+json' } },
+        { headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}` } },
       );
 
       const totalBytes = Object.values(response.data).reduce((sum, bytes) => sum + bytes, 0);
@@ -110,14 +110,14 @@ export default class SingleRepoStore {
     try {
       const response = await axios.get<GitHubContributor[]>(
         `https://api.github.com/repos/${orgName}/${repoName}/contributors`,
-        { headers: { Accept: 'application/vnd.github+json' } },
+        { headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}` } },
       );
 
       const contributors = await Promise.all(
         response.data.map(async (contributor) => {
           try {
             const userResponse = await axios.get<GitHubUser>(`https://api.github.com/users/${contributor.login}`, {
-              headers: { Accept: 'application/vnd.github+json' },
+              headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}` },
             });
             return {
               avatarUrl: contributor.avatar_url,

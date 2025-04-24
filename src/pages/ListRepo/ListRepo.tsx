@@ -15,7 +15,6 @@ import Loader from 'components/Loader';
 import SearchIcon from 'components/icons/SearchIcon';
 import useRecentRepos from './useRecentRepos';
 
-
 const ListRepo = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -107,35 +106,39 @@ const ListRepo = () => {
         </div>
 
         {githubStore.isLoading ? (
-          <Loader size="l" />
+          <div className="loader_block">
+            <Loader size="l" />
+          </div>
         ) : githubStore.error ? (
           <div className="error-message">{githubStore.error}</div>
         ) : githubStore.repos.length > 0 ? (
-          <div className={styles.repo_block}>
-            {githubStore.repos.map((repo) => (
-              <Card
-                key={repo.id}
-                image={repo.owner.avatar_url}
-                title={repo.name}
-                subtitle={repo.description || ''}
-                captionSlot={` ${repo.stargazers_count} ${repo.updated_at}`}
-                onClick={() => handleCardClick(repo)}
+          <>
+            <div className={styles.repo_block}>
+              {githubStore.repos.map((repo) => (
+                <Card
+                  key={repo.id}
+                  image={repo.owner.avatar_url}
+                  title={repo.name}
+                  subtitle={repo.description || ''}
+                  captionSlot={` ${repo.stargazers_count} ${repo.updated_at}`}
+                  onClick={() => handleCardClick(repo)}
+                />
+              ))}
+            </div>
+
+            <div className={styles.pagination_block}>
+              <Pagination
+                currentPage={githubStore.currentPage}
+                totalPages={Math.ceil(githubStore.totalCount / githubStore.pageSize)}
+                onPageChange={handlePageChange}
               />
-            ))}
-          </div>
+            </div>
+          </>
         ) : (
           <div className={styles.error_text}>
             <Text view="p-18">No repositories found</Text>
           </div>
         )}
-
-        <div className={styles.pagination_block}>
-          <Pagination
-            currentPage={githubStore.currentPage}
-            totalPages={Math.ceil(githubStore.totalCount / githubStore.pageSize)}
-            onPageChange={handlePageChange}
-          />
-        </div>
 
         {recentRepos.length > 0 && (
           <div className={styles.recent_repos_block}>
