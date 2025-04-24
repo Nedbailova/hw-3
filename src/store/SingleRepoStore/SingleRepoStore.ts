@@ -1,10 +1,11 @@
 import { makeObservable, observable, action, computed, runInAction } from 'mobx';
 import axios from 'axios';
-import { RepoData, LanguageInfo, Contributor, GitHubContributor, GitHubUser } from './types';
+import { RepoData, LanguageInfo, Contributor, GitHubContributor } from './types';
 import { removeSVGTags } from 'utils/removeSVGTags/removeSVGTags';
 import { editLink } from 'utils/editLink/editLink';
 import { sortContributors } from 'utils/sortCintributors';
-const token = process.env.REACT_APP_API_TOKEN;
+
+const API_BASE = 'https://remarkable-kashata-cbd2de.netlify.app/.netlify/functions';
 
 export default class SingleRepoStore {
   repoInfo: RepoData | null = null;
@@ -42,8 +43,12 @@ export default class SingleRepoStore {
 
     try {
       const [repoResponse, readmeResponse, languagesResponse, contributorsResponse] = await Promise.all([
-        axios.get(`https://api.github.com/repos/${organization}/${repoName}`, {
-          headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}` },
+        axios.get(`${API_BASE}/github_proxy`, {
+          params: {
+            endpoint: 'repo',
+            org: organization,
+            repo: repoName,
+          },
         }),
         this.fetchReadme(organization, repoName),
         this.fetchLanguages(organization, repoName),
@@ -81,8 +86,13 @@ export default class SingleRepoStore {
 
   private async fetchReadme(orgName: string, repoName: string): Promise<string> {
     try {
-      const response = await axios.get(`https://api.github.com/repos/${orgName}/${repoName}/readme`, {
-        headers: { Accept: 'application/vnd.github.html', Authorization: `Bearer ${token}` },
+      const response = await axios.get(`${API_BASE}/github_proxy`, {
+        params: {
+          endpoint: 'readme',
+          org: orgName,
+          repo: repoName,
+        },
+        headers: { Accept: 'application/vnd.github.html' },
       });
       return removeSVGTags(response.data);
     } catch {
@@ -92,10 +102,13 @@ export default class SingleRepoStore {
 
   private async fetchLanguages(orgName: string, repoName: string): Promise<LanguageInfo[]> {
     try {
-      const response = await axios.get<Record<string, number>>(
-        `https://api.github.com/repos/${orgName}/${repoName}/languages`,
-        { headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}` } },
-      );
+      const response = await axios.get<Record<string, number>>(`${API_BASE}/github_proxy`, {
+        params: {
+          endpoint: 'languages',
+          org: orgName,
+          repo: repoName,
+        },
+      });
 
       const totalBytes = Object.values(response.data).reduce((sum, bytes) => sum + bytes, 0);
       return Object.entries(response.data).map(([lang, bytes]) => ({
@@ -109,35 +122,23 @@ export default class SingleRepoStore {
 
   private async fetchContributors(orgName: string, repoName: string): Promise<Contributor[]> {
     try {
-      const response = await axios.get<GitHubContributor[]>(
-        `https://api.github.com/repos/${orgName}/${repoName}/contributors`,
-        { headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}` } },
-      );
+      const response = await axios.get<GitHubContributor[]>(`${API_BASE}/github_proxy`, {
+        params: {
+          endpoint: 'contributors',
+          org: orgName,
+          repo: repoName,
+        },
+      });
 
-      const contributors = await Promise.all(
-        response.data.map(async (contributor) => {
-          try {
-            const userResponse = await axios.get<GitHubUser>(`https://api.github.com/users/${contributor.login}`, {
-              headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}` },
-            });
-            return {
-              avatarUrl: contributor.avatar_url,
-              username: contributor.login,
-              name: userResponse.data.name,
-              contributions: contributor.contributions,
-            };
-          } catch {
-            return {
-              avatarUrl: contributor.avatar_url,
-              username: contributor.login,
-              name: null,
-              contributions: contributor.contributions,
-            };
-          }
-        }),
-      );
 
-      return sortContributors(contributors);
+      return sortContributors(
+        response.data.map((c): Contributor => ({
+          avatarUrl: c.avatar_url,
+          username: c.login,
+          name: c.login, // или null, если не уверен
+          contributions: c.contributions,
+        }))
+      );
     } catch {
       return [];
     }

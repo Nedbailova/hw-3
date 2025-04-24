@@ -1,7 +1,8 @@
 import { makeObservable, observable, action, computed, runInAction } from 'mobx';
 import axios from 'axios';
 import { ContributorInfo, UserRepo, GithubRepoResponse } from './types';
-const token = process.env.REACT_APP_API_TOKEN;
+
+const API_BASE = 'https://remarkable-kashata-cbd2de.netlify.app/.netlify/functions';
 
 export default class ContributorStore {
   userInfo: ContributorInfo | null = null;
@@ -80,25 +81,22 @@ export default class ContributorStore {
   }
 
   private async fetchUserInfo(username: string) {
-    return axios.get(`https://api.github.com/users/${username}`, {
-      headers: {
-        Accept: 'application/vnd.github+json',
-        Authorization: `Bearer ${token}`
+    return axios.get(`${API_BASE}/github_proxy`, {
+      params: {
+        endpoint: 'user',
+        username,
       },
     });
   }
 
   private async fetchUserRepos(username: string) {
-    return axios.get(`https://api.github.com/users/${username}/repos`, {
+    return axios.get(`${API_BASE}/github_proxy`, {
       params: {
+        endpoint: 'user_repos',
+        username,
         sort: 'updated',
         direction: 'desc',
         per_page: 100,
-      },
-      headers: {
-        Accept: 'application/vnd.github+json',
-        Authorization: `Bearer ${token}`
-
       },
     });
   }

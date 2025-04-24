@@ -2,7 +2,7 @@ import { makeObservable, observable, action, computed } from 'mobx';
 import axios from 'axios';
 import { IGitHubStore, Repo } from './types';
 import { formatUpdateDate } from 'utils/formatUpdateDate';
-const token = process.env.REACT_APP_API_TOKEN;
+const API_BASE = 'https://remarkable-kashata-cbd2de.netlify.app/.netlify/functions';
 
 
 export default class GitHubStore implements IGitHubStore {
@@ -108,26 +108,23 @@ export default class GitHubStore implements IGitHubStore {
   async fetchRepos() {
     this.isLoading = true;
     this.error = null;
-
+  
     try {
-      const response = await axios.get<Repo[]>(`https://api.github.com/orgs/${this.currentOrganization}/repos`, {
+      const response = await axios.get(`${API_BASE}/github_proxy`, {
         params: {
-          type: this.selectedRepoTypes.join(','),
+          endpoint: 'repos',
+          org: this.currentOrganization,
           per_page: this.pageSize,
           page: this.currentPage,
         },
-        headers: {
-          Accept: 'application/vnd.github+json',
-          Authorization: `Bearer ${token}`
-        },
       });
-
-      this.repos = response.data.map((repo) => ({
+  
+      this.repos = response.data.map((repo: Repo) => ({
         ...repo,
         updated_at: formatUpdateDate(repo.updated_at),
         stargazers_count: repo.stargazers_count || 0,
       }));
-
+  
       const linkHeader = response.headers.link;
       if (linkHeader) {
         const matches = linkHeader.match(/page=(\d+)>; rel="last"/);
