@@ -1,9 +1,7 @@
 import { makeObservable, observable, action, computed, runInAction } from 'mobx';
 import axios from 'axios';
 import { ContributorInfo, UserRepo, GithubRepoResponse } from './types';
-
-const encodedToken = 'Z2hwXzB6djBzbnhNOEFJZ2R1bUZTRlplenV6SHgxUzgxeDNlOUdXdw==';
-const githubToken = atob(encodedToken);
+const token = process.env.REACT_APP_API_TOKEN;
 
 export default class ContributorStore {
   userInfo: ContributorInfo | null = null;
@@ -85,7 +83,7 @@ export default class ContributorStore {
     return axios.get(`https://api.github.com/users/${username}`, {
       headers: {
         Accept: 'application/vnd.github+json',
-        Authorization: `Bearer ${githubToken}`
+        Authorization: `Bearer ${token}`
       },
     });
   }
@@ -99,7 +97,8 @@ export default class ContributorStore {
       },
       headers: {
         Accept: 'application/vnd.github+json',
-        Authorization: `Bearer ${githubToken}`
+        Authorization: `Bearer ${token}`
+
       },
     });
   }

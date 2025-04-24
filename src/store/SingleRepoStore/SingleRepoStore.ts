@@ -4,9 +4,7 @@ import { RepoData, LanguageInfo, Contributor, GitHubContributor, GitHubUser } fr
 import { removeSVGTags } from 'utils/removeSVGTags/removeSVGTags';
 import { editLink } from 'utils/editLink/editLink';
 import { sortContributors } from 'utils/sortCintributors';
-
-const encodedToken = 'Z2hwXzB6djBzbnhNOEFJZ2R1bUZTRlplenV6SHgxUzgxeDNlOUdXdw==';
-const githubToken = atob(encodedToken);
+const token = process.env.REACT_APP_API_TOKEN;
 
 export default class SingleRepoStore {
   repoInfo: RepoData | null = null;
@@ -45,7 +43,7 @@ export default class SingleRepoStore {
     try {
       const [repoResponse, readmeResponse, languagesResponse, contributorsResponse] = await Promise.all([
         axios.get(`https://api.github.com/repos/${organization}/${repoName}`, {
-          headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${githubToken}` },
+          headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}` },
         }),
         this.fetchReadme(organization, repoName),
         this.fetchLanguages(organization, repoName),
@@ -84,7 +82,7 @@ export default class SingleRepoStore {
   private async fetchReadme(orgName: string, repoName: string): Promise<string> {
     try {
       const response = await axios.get(`https://api.github.com/repos/${orgName}/${repoName}/readme`, {
-        headers: { Accept: 'application/vnd.github.html', Authorization: `Bearer ${githubToken}` },
+        headers: { Accept: 'application/vnd.github.html', Authorization: `Bearer ${token}` },
       });
       return removeSVGTags(response.data);
     } catch {
@@ -96,7 +94,7 @@ export default class SingleRepoStore {
     try {
       const response = await axios.get<Record<string, number>>(
         `https://api.github.com/repos/${orgName}/${repoName}/languages`,
-        { headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${githubToken}` } },
+        { headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}` } },
       );
 
       const totalBytes = Object.values(response.data).reduce((sum, bytes) => sum + bytes, 0);
@@ -113,14 +111,14 @@ export default class SingleRepoStore {
     try {
       const response = await axios.get<GitHubContributor[]>(
         `https://api.github.com/repos/${orgName}/${repoName}/contributors`,
-        { headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${githubToken}` } },
+        { headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}` } },
       );
 
       const contributors = await Promise.all(
         response.data.map(async (contributor) => {
           try {
             const userResponse = await axios.get<GitHubUser>(`https://api.github.com/users/${contributor.login}`, {
-              headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${githubToken}` },
+              headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}` },
             });
             return {
               avatarUrl: contributor.avatar_url,
