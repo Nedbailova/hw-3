@@ -82,7 +82,6 @@ export default class ContributorStore {
     return axios.get(`https://api.github.com/users/${username}`, {
       headers: {
         Accept: 'application/vnd.github+json',
-        Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`
       },
     });
   }
@@ -96,7 +95,6 @@ export default class ContributorStore {
       },
       headers: {
         Accept: 'application/vnd.github+json',
-        Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`
       },
     });
   }
