@@ -1,11 +1,6 @@
 import { makeObservable, observable, action, computed, runInAction } from 'mobx';
 import axios from 'axios';
-import { RepoData, LanguageInfo, Contributor, GitHubContributor } from './types';
-import { removeSVGTags } from 'utils/removeSVGTags/removeSVGTags';
-import { editLink } from 'utils/editLink/editLink';
-import { sortContributors } from 'utils/sortCintributors';
-
-const API_BASE = 'https://remarkable-kashata-cbd2de.netlify.app/.netlify/functions';
+import { RepoData, LanguageInfo, Contributor, GitHubContributor, GitHubUser } from './types';
 
 export default class SingleRepoStore {
   repoInfo: RepoData | null = null;
@@ -13,7 +8,7 @@ export default class SingleRepoStore {
   newLink = '';
   isLoading = false;
   error: string | null = null;
-  private defaultOrganization = 'ktsstudio';
+  private defaultOrganization = "ktsstudio";
 
   constructor() {
     makeObservable(this, {
@@ -32,8 +27,8 @@ export default class SingleRepoStore {
   }
 
   async fetchRepoData(repoName: string, orgName?: string) {
-    const organization = orgName || this.defaultOrganization;
-
+    const organization = orgName || this.defaultOrganization; 
+    
     runInAction(() => {
       this.isLoading = true;
       this.error = null;
@@ -43,12 +38,8 @@ export default class SingleRepoStore {
 
     try {
       const [repoResponse, readmeResponse, languagesResponse, contributorsResponse] = await Promise.all([
-        axios.get(`${API_BASE}/github_proxy`, {
-          params: {
-            endpoint: 'repo',
-            org: organization,
-            repo: repoName,
-          },
+        axios.get(`https://api.github.com/repos/${organization}/${repoName}`, {
+          headers: { Accept: 'application/vnd.github+json' },
         }),
         this.fetchReadme(organization, repoName),
         this.fetchLanguages(organization, repoName),
@@ -56,7 +47,7 @@ export default class SingleRepoStore {
       ]);
 
       runInAction(() => {
-        this.newLink = editLink(repoResponse.data.homepage);
+        this.newLink = this.editLink(repoResponse.data.homepage);
         this.repoInfo = {
           name: repoResponse.data.name,
           description: repoResponse.data.description,
@@ -86,15 +77,11 @@ export default class SingleRepoStore {
 
   private async fetchReadme(orgName: string, repoName: string): Promise<string> {
     try {
-      const response = await axios.get(`${API_BASE}/github_proxy`, {
-        params: {
-          endpoint: 'readme',
-          org: orgName,
-          repo: repoName,
-        },
-        headers: { Accept: 'application/vnd.github.html' },
-      });
-      return removeSVGTags(response.data);
+      const response = await axios.get(
+        `https://api.github.com/repos/${orgName}/${repoName}/readme`,
+        { headers: { Accept: 'application/vnd.github.html' } }
+      );
+      return this.removeSVGTags(response.data);
     } catch {
       return '';
     }
@@ -102,13 +89,10 @@ export default class SingleRepoStore {
 
   private async fetchLanguages(orgName: string, repoName: string): Promise<LanguageInfo[]> {
     try {
-      const response = await axios.get<Record<string, number>>(`${API_BASE}/github_proxy`, {
-        params: {
-          endpoint: 'languages',
-          org: orgName,
-          repo: repoName,
-        },
-      });
+      const response = await axios.get<Record<string, number>>(
+        `https://api.github.com/repos/${orgName}/${repoName}/languages`,
+        { headers: { Accept: 'application/vnd.github+json' } }
+      );
 
       const totalBytes = Object.values(response.data).reduce((sum, bytes) => sum + bytes, 0);
       return Object.entries(response.data).map(([lang, bytes]) => ({
@@ -122,25 +106,61 @@ export default class SingleRepoStore {
 
   private async fetchContributors(orgName: string, repoName: string): Promise<Contributor[]> {
     try {
-      const response = await axios.get<GitHubContributor[]>(`${API_BASE}/github_proxy`, {
-        params: {
-          endpoint: 'contributors',
-          org: orgName,
-          repo: repoName,
-        },
-      });
-
-
-      return sortContributors(
-        response.data.map((c): Contributor => ({
-          avatarUrl: c.avatar_url,
-          username: c.login,
-          name: c.login, // или null, если не уверен
-          contributions: c.contributions,
-        }))
+      const response = await axios.get<GitHubContributor[]>(
+        `https://api.github.com/repos/${orgName}/${repoName}/contributors`, 
+        { headers: { Accept: 'application/vnd.github+json' } }
       );
+
+      const contributors = await Promise.all(
+        response.data.map(async (contributor) => {
+          try {
+            const userResponse = await axios.get<GitHubUser>(
+              `https://api.github.com/users/${contributor.login}`,
+              { headers: { Accept: 'application/vnd.github+json' } }
+            );
+            return {
+              avatarUrl: contributor.avatar_url,
+              username: contributor.login,
+              name: userResponse.data.name,
+              contributions: contributor.contributions,
+            };
+          } catch {
+            return {
+              avatarUrl: contributor.avatar_url,
+              username: contributor.login,
+              name: null,
+              contributions: contributor.contributions,
+            };
+          }
+        })
+      );
+
+      return this.sortContributors(contributors);
     } catch {
       return [];
     }
+  }
+
+  private sortContributors(contributors: Contributor[]): Contributor[] {
+    return contributors.sort((a, b) => {
+      if (b.contributions !== a.contributions) return b.contributions - a.contributions;
+      if (a.name && !b.name) return -1;
+      if (!a.name && b.name) return 1;
+      if (a.name && b.name) return a.name.localeCompare(b.name);
+      return a.username.localeCompare(b.username);
+    });
+  }
+
+  private removeSVGTags(html: string): string {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    doc.querySelectorAll('svg').forEach((svg) => svg.remove());
+    return doc.body.innerHTML;
+  }
+
+  private editLink(url: string | null | undefined): string {
+    if (!url) return '';
+    const parts = url.split('/');
+    return parts[2];
   }
 }
